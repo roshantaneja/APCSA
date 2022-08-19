@@ -2,4 +2,10 @@
 comment0.target=FeedDog
 comment1.params=
 comment1.target=void\ run()
-numComments=2
+comment2.params=
+comment2.target=void\ turnRight()
+comment3.params=
+comment3.target=void\ turnAround()
+comment4.params=num
+comment4.target=void\ moveMore(int)
+numComments=5
