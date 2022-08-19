@@ -15,5 +15,6 @@ Wall: (9, 1) west
 Wall: (9, 2) west
 Wall: (9, 3) west
 Karel: (1, 1) east
-BeeperBag: INFINITE
-Speed: 0.00
+
+BeeperBag: 0
+Speed: 0.70
