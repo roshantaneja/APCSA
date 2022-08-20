@@ -7,10 +7,10 @@ Hours spent doing homework: 1.5
 "Computer Science is no more about computers than astronomy is about telescopes."
 -- E. W. Dijsktra
 
+### Heres the syllabus so you can track my progress too!
 ---
-# Heres the syllabus so you can track my progress too!
-
-## AP Computer Science Syllabus 2022 – 2023
+## AP Computer Science Syllabus
+2022 – 2023
 
 - [x] **Intro**
 >Karel the Robot
