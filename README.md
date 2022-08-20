@@ -13,16 +13,17 @@ Intro
     Karel the Robot
 ---
 Unit #0
-    Using Objects and Drawing Graphics
-    **First Test – September 23**
+>Using Objects and Drawing Graphics
+>>First Test – September 23
 ---
 Unit #1
-    Implementing Classes, Fundamental Data Types, Decisions
-    **Second Test – October 25**
+>Implementing Classes, Fundamental Data Types, Decisions
+>>Second Test – October 25
 ---
 Unit #2
-    Iteration and Loops
-    **Third Test – November 30**
+>Iteration and Loops
+>>Third Test – November 30
 ---
-    A little bit more and review
-    **Final exam – December 13**
+Final Unit
+>A little bit more and review
+>>Final exam – December 13
