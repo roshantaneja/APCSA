@@ -1,6 +1,6 @@
 Welcome to my APCSA Homework Repo!
 
-Hours spent doing homework: 0.5
+Hours spent doing homework: 1.5
 
 `will update as more work completed`
 
@@ -12,21 +12,25 @@ Hours spent doing homework: 0.5
 
 ## AP Computer Science Syllabus 2022 – 2023
 
-**Intro**
+- [x] **Intro**
 >Karel the Robot
----
-**Unit #0**
+
+
+- [ ] **Unit #0**
 >Using Objects and Drawing Graphics
 >>First Test – September 23
----
-**Unit #1**
+
+
+- [ ] **Unit #1**
 >Implementing Classes, Fundamental Data Types, Decisions
 >>Second Test – October 25
----
-**Unit #2**
+
+
+- [ ] **Unit #2**
 >Iteration and Loops
 >>Third Test – November 30
----
-**Final Unit**
+
+
+- [ ] **Final Unit**
 >A little bit more and review
 >>Final exam – December 13
