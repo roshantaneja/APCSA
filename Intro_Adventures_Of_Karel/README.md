@@ -68,9 +68,3 @@ public class SimpleKarelProgram extends Karel {
     }
 }
 ```
-
-turnLeft();
-putBeeper();
-
-
-pickBeepe
