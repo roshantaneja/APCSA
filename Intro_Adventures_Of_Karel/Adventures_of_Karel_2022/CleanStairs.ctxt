@@ -2,4 +2,10 @@
 comment0.target=CleanStairs
 comment1.params=
 comment1.target=void\ run()
-numComments=2
+comment2.params=
+comment2.target=void\ turnRight()
+comment3.params=
+comment3.target=void\ cleanStep()
+comment4.params=
+comment4.target=void\ ascendStep()
+numComments=5
