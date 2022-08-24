@@ -8,7 +8,6 @@ public class CleanStairs extends Karel
             cleanStep();
         }
     }
-    
     public void turnRight(){
         for (int i=0; i<3;i++){
             turnLeft();
