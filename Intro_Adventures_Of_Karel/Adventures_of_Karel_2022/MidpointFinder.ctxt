@@ -2,4 +2,10 @@
 comment0.target=MidpointFinder
 comment1.params=
 comment1.target=void\ run()
-numComments=2
+comment2.params=
+comment2.target=void\ layRowOfBeepers()
+comment3.params=
+comment3.target=void\ turnAround()
+comment4.params=
+comment4.target=void\ pickUpLastBeeperAtOtherEnd()
+numComments=5
