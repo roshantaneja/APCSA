@@ -13,10 +13,12 @@ public class CleanStairs extends Karel
             turnLeft();
         }
     }
+    
     public void cleanStep(){
         ascendStep();
         pickBeeper();
     }
+    
     public void ascendStep(){
         turnLeft();
         move();
