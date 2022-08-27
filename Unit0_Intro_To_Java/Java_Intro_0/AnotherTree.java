@@ -36,7 +36,4 @@ public class AnotherTree extends GraphicsProgram
         text.setFont(treeFont);
         add(text);
     }        
-           
-     
-    
 }

@@ -6,6 +6,8 @@ public class Ponies extends ConsoleProgram
 
     public void run()
     {
+        String name = readLine("whats your name?");
+        println("have a nice day " + name + "!");
         println("I Like Ponies");
         for (int i=0; i<10; i++) {
             println("They are cute");
