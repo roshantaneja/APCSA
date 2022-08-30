@@ -2,4 +2,10 @@
 comment0.target=SpotLight
 comment1.params=
 comment1.target=void\ run()
-numComments=2
+comment2.params=
+comment2.target=void\ drawBase()
+comment3.params=
+comment3.target=void\ drawAllLights()
+comment4.params=i\ myColor
+comment4.target=void\ drawLight(int,\ java.awt.Color)
+numComments=5
