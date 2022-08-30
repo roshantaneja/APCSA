@@ -24,6 +24,9 @@ public class Ponies extends ConsoleProgram
         {
             println("Wow!  That's a lot of legs!");
         }
+        
+        int x= 4;
+        
     }
 
 }
