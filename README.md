@@ -15,12 +15,12 @@ Hours spent doing homework: 1.5
 
 2022 – 2023
 
-- [x] **Intro**
+- [x] **Intro** - Completed Aug 26, 2022
 
 >Karel the Robot
 
 
-- [ ] **Unit #0**
+- [x] **Unit #0**
 
 >Using Objects and Drawing Graphics
 >>First Test – September 23

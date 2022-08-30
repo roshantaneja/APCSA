@@ -13,7 +13,22 @@ public class Bullseye extends GraphicsProgram
 
     public void run()
     {
-
+        Color myColor = Color.red;
+        for (int i = NUMRINGS; i > 0; i--){
+            drawCircle(i, myColor);
+            if (myColor == Color.red){
+                myColor = Color.black;
+            } else {
+                myColor = Color.red;
+            }
+        }
+    }
+    
+    public void drawCircle(int i, Color myColor){
+        GOval circle = new GOval(INITIALX - i*RINGWIDTH, INITIALY - i*RINGWIDTH, i*2*RINGWIDTH, i*2*RINGWIDTH);
+        circle.setFilled(true);
+        circle.setColor(myColor);
+        add(circle);
     }
 
 }

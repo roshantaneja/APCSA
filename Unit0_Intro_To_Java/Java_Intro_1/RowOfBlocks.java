@@ -14,7 +14,16 @@ public class RowOfBlocks extends GraphicsProgram
 
     public void run()
     {
-        
+        for (int i = 0; i<NUM_BLOCKS; i++){
+            createBlock(i);
+        }
+    }
+    
+    public void createBlock(int i){
+        GRect block = new GRect(START_X + i * (BLOCK_SIZE + GAP), START_Y, BLOCK_SIZE, BLOCK_SIZE);
+        block.setFilled(true);
+        block.setColor(Color.black);
+        add(block);
     }
 
 }

@@ -26,7 +26,14 @@ public class Ponies extends ConsoleProgram
         }
         
         int x= 4;
+        String y = "what a nice flag!";
+        double z = 2.75;
         
+        int bob = 2;
+        String lucy = "Hello";
+        double emma = 0.06;
+        
+        x = bob;
     }
 
 }
