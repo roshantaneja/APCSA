@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Flag
+comment1.params=
+comment1.target=void\ run()
+comment2.params=
+comment2.target=void\ createBlueSquares()
+comment3.params=
+comment3.target=void\ createRedCross()
+comment4.params=
+comment4.target=void\ createRedAndWhiteDiagonalStripes()
+comment5.params=
+comment5.target=void\ createApology()
+numComments=6
