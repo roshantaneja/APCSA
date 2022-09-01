@@ -9,8 +9,7 @@ public class CarProgram extends ConsoleProgram
         println("Hello Cars!");
         int x = 7;
         String name = "marty";
-        Car prius;
-        prius = new Car(50, 9);
+        Car prius = new Car(50, 9);
         prius.fillup(50.0);
         prius.drive(55);
         println("Hello");
