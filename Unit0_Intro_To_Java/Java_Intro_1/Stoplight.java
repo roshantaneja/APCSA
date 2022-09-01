@@ -7,7 +7,7 @@ public class Stoplight extends GraphicsProgram
 {
     private static final double WINDOW_WIDTH = 754;
     private static final double WINDOW_HEIGHT = 492;
-    private static final double STOPLIGHT_HEIGHT = 300;
+    private static final double STOPLIGHT_HEIGHT = 100;
 
     public void run()
     {
