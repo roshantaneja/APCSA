@@ -7,16 +7,21 @@ import java.awt.event.*;
 public class BouncingBamdad extends GraphicsProgram
 {
     GImage natasha;
-    double vX = 1.0;
-    double vY = 1.0;
-    public void run()
-    {
+    double vX;
+    double vY;
+    private static final double SPEED = 0.1;
+    
+    public void setup(){
+        vX = 2.0;
+        vY = 1.0;
         natasha = new GImage("natasha.jpg", 100, 100);
         natasha.scale(0.5);
         add(natasha);
-        
+    }
+    
+    public void animationLoop(){
         while (true){
-            pause(10);
+            pause(1/SPEED);
             natasha.move(vX,vY);
             if (natasha.getX() > getWidth() - natasha.getWidth()){
                 vX = -vX;
@@ -31,6 +36,12 @@ public class BouncingBamdad extends GraphicsProgram
                 vY = -vY;
             }
         }
+    }
+    
+    public void run()
+    {
+        setup();
+        animationLoop();
     }
 
 }

@@ -10,6 +10,8 @@ public class CarProgram extends ConsoleProgram
         int x = 7;
         String name = "marty";
         Car prius = new Car(50, 9);
+        
+        
         prius.fillup(50.0);
         prius.drive(55);
         println("Hello");
