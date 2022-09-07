@@ -36,9 +36,6 @@ public class Ponies extends ConsoleProgram
         bob = x;
         x = 7;
         x = x + 1;
-        
-        bob = lucy;
-        x = z;
     }
 
 }
