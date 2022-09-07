@@ -6,4 +6,6 @@ i think it runs on openedge abl and uses the acm library, which you gotta instal
 
 but thats about it
 
-we learned about for loops and iterations through graphics programs so its gonna be  epic
+09/01/2022 - we learned about for loops and iterations through graphics programs so its gonna be  epic
+
+09/07/2022 - Just started the java 2 chapter, going through more stuff now!

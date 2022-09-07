@@ -15,6 +15,14 @@ public class BarGraph extends GraphicsProgram
 
     public void run()
     {
-       
+       for (int i = 0; i < NUMBARS; i++){
+           placeBar(i);
+       }
+    }
+    
+    public void placeBar(int i){
+        GRect bar = new GRect(BOTTOMLEFT_X + i*BARWIDTH, BOTTOMLEFT_Y - (TALLESTBARHEIGHT - (i*DECREASEBARAMOUNT)), BARWIDTH, (TALLESTBARHEIGHT - (i*DECREASEBARAMOUNT)));
+        bar.setColor(Color.blue);
+        add(bar);
     }
 }

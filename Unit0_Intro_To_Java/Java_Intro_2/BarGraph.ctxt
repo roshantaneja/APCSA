@@ -2,4 +2,6 @@
 comment0.target=BarGraph
 comment1.params=
 comment1.target=void\ run()
-numComments=2
+comment2.params=i
+comment2.target=void\ placeBar(int)
+numComments=3
