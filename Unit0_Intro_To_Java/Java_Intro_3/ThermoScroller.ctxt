@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=ThermoScroller
+comment1.params=
+comment1.target=void\ run()
+comment2.params=
+comment2.target=void\ initializeVariables()
+comment3.params=
+comment3.target=void\ animationLoop()
+numComments=4
