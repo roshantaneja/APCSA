@@ -6,4 +6,6 @@ comment2.params=
 comment2.target=void\ initializeVariables()
 comment3.params=
 comment3.target=void\ animationLoop()
-numComments=4
+comment4.params=event
+comment4.target=void\ mouseClicked(java.awt.event.MouseEvent)
+numComments=5
