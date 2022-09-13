@@ -8,10 +8,17 @@ public class ThermostatHomework extends ConsoleProgram
     {
         int min = readInt("What do want the min to be? ");
         Thermostat therm  = new Thermostat(min, 80);
-
-        for (int i=0; i<10; i++)
-        {
-            therm.colder();
+        
+        println("the temperature is now " + therm.getValue());
+        
+        while (true){
+            String increment = readLine("w (Warmer) or c (Colder)? ");
+            if (increment == "w"){
+                therm.warmer();
+            } else if (increment == "c") {
+                therm.colder();
+            }
+            println("the temperature is now " + therm.getValue());
         }
     }
 

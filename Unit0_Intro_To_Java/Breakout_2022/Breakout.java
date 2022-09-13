@@ -45,7 +45,6 @@ public class Breakout extends GraphicsProgram
 
 /** Offset of the top brick row from the top */
     private static final int BRICK_Y_OFFSET = 70;
-
 /** Number of "lives" (balls) before the player loses */
     private static final int NUM_LIVES = 3;
 

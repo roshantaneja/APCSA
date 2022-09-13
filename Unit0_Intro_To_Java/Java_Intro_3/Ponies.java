@@ -32,7 +32,6 @@ public class Ponies extends ConsoleProgram
         int bob = 2;
         String lucy = "Hello";
         double emma = 0.06;
-        
         bob = x;
         x = 7;
         x = x + 1;
