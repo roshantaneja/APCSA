@@ -53,7 +53,8 @@ public class Breakout extends GraphicsProgram
     GOval ball;
     double vx;
     double vy;
-    
+    GOval[] Balls;
+
     int PADDLE_Y;
 
     /** Runs the Breakout program. */
@@ -61,7 +62,7 @@ public class Breakout extends GraphicsProgram
     {
         initGame();
     }
-    
+
     public void initGame(){
         PADDLE_Y = HEIGHT-PADDLE_HEIGHT-PADDLE_Y_OFFSET;
         setupBricks();
@@ -71,7 +72,7 @@ public class Breakout extends GraphicsProgram
             //checkForCollisions();
         }
     }
-    
+
     public void setupBricks(){
         for (int i=0; i<NBRICK_ROWS; i++){
             for(int j=0; j<NBRICKS_PER_ROW; j++){
@@ -80,45 +81,76 @@ public class Breakout extends GraphicsProgram
                 switch(i){
                     case 0:
                     case 1:
-                    block.setColor(Color.red);
-                    break;
+                        block.setColor(Color.red);
+                        break;
                     case 2:
                     case 3:
-                    block.setColor(Color.orange);
-                    break;
+                        block.setColor(Color.orange);
+                        break;
                     case 4:
                     case 5:
-                    block.setColor(Color.yellow);
-                    break;
+                        block.setColor(Color.yellow);
+                        break;
                     case 6:
                     case 7:
-                    block.setColor(Color.green);
-                    break;
+                        block.setColor(Color.green);
+                        break;
                     case 8:
                     case 9:
-                    block.setColor(Color.cyan);
-                    break;
+                        block.setColor(Color.cyan);
+                        break;
                 }
                 add(block);
             }
         }
     }
-    
+
     public void setupPaddle()
     {
         paddle = new GRect(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
         paddle.setFilled(true);
         add(paddle);
     }
-    
+
     public void mouseMoved(MouseEvent event){
         paddle.setLocation(event.getX() - PADDLE_WIDTH/2, APPLICATION_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT);
         if(paddle.getX()<0){
-                paddle.setLocation(0, PADDLE_Y);
-            }
+            paddle.setLocation(0, PADDLE_Y);
+        }
         if(paddle.getX()> WIDTH-PADDLE_WIDTH){
-                paddle.setLocation(WIDTH-PADDLE_WIDTH, PADDLE_Y);
+            paddle.setLocation(WIDTH-PADDLE_WIDTH, PADDLE_Y);
         }
     }
 
+    public void checkForCollisions(){
+        GObject obj;
+        for (int i=0; i<Balls.length; i++){
+            GOval oval = Balls[i];
+            if(oval == null){
+                continue;
+            }
+            if(getElementAt(oval.getX(), oval.getY()) != null){
+                obj = getElementAt(oval.getX(), oval.getY());
+            } else if (getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY()) != null){
+                obj = getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY());
+            } else if (getElementAt(oval.getX(), oval.getY() + BALL_RADIUS*2) != null){
+                obj = getElementAt(oval.getX(), oval.getY() + BALL_RADIUS*2);
+            } else if (getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY() + BALL_RADIUS*2) != null){
+                obj = getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY() + BALL_RADIUS*2);
+            } else {
+                obj = null;
+            }
+            if(obj == paddle){
+                vy[i] = -Math.abs(vy[i]);
+            } else if (obj instanceof GRect){
+                remove(obj);
+                bounceClip.play();
+                bricksLeft--;
+                if(bricksLeft == 0){
+                    initGameOver(true);
+                }
+                vy[i] = -vy[i];
+            }
+        }
+    }
 }
