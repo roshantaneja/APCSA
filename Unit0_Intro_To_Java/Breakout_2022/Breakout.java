@@ -53,16 +53,72 @@ public class Breakout extends GraphicsProgram
     GOval ball;
     double vx;
     double vy;
-    State state;
     
-    public enum State {
-        MENU, GAME, END
-    }
+    int PADDLE_Y;
 
     /** Runs the Breakout program. */
     public void run() 
     {
-        
+        initGame();
+    }
+    
+    public void initGame(){
+        PADDLE_Y = HEIGHT-PADDLE_HEIGHT-PADDLE_Y_OFFSET;
+        setupBricks();
+        setupPaddle();
+        while(true){
+            //updateBalls();
+            //checkForCollisions();
+        }
+    }
+    
+    public void setupBricks(){
+        for (int i=0; i<NBRICK_ROWS; i++){
+            for(int j=0; j<NBRICKS_PER_ROW; j++){
+                GRect block = new GRect((BRICK_WIDTH+BRICK_SEP)*j, (BRICK_HEIGHT+BRICK_SEP)*i + BRICK_Y_OFFSET, BRICK_WIDTH, BRICK_HEIGHT);
+                block.setFilled(true);
+                switch(i){
+                    case 0:
+                    case 1:
+                    block.setColor(Color.red);
+                    break;
+                    case 2:
+                    case 3:
+                    block.setColor(Color.orange);
+                    break;
+                    case 4:
+                    case 5:
+                    block.setColor(Color.yellow);
+                    break;
+                    case 6:
+                    case 7:
+                    block.setColor(Color.green);
+                    break;
+                    case 8:
+                    case 9:
+                    block.setColor(Color.cyan);
+                    break;
+                }
+                add(block);
+            }
+        }
+    }
+    
+    public void setupPaddle()
+    {
+        paddle = new GRect(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
+        paddle.setFilled(true);
+        add(paddle);
+    }
+    
+    public void mouseMoved(MouseEvent event){
+        paddle.setLocation(event.getX() - PADDLE_WIDTH/2, APPLICATION_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT);
+        if(paddle.getX()<0){
+                paddle.setLocation(0, PADDLE_Y);
+            }
+        if(paddle.getX()> WIDTH-PADDLE_WIDTH){
+                paddle.setLocation(WIDTH-PADDLE_WIDTH, PADDLE_Y);
+        }
     }
 
 }
