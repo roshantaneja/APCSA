@@ -1,3 +1,4 @@
+//Roshan Taneja
 
 import acm.graphics.*;
 import acm.program.*;
@@ -53,9 +54,8 @@ public class Breakout extends GraphicsProgram
     GOval ball;
     double vx;
     double vy;
-    GOval[] Balls;
-
-    int PADDLE_Y;
+    int bricksLeft;
+    int PADDLE_Y = HEIGHT-PADDLE_HEIGHT-PADDLE_Y_OFFSET;
 
     /** Runs the Breakout program. */
     public void run() 
@@ -64,12 +64,11 @@ public class Breakout extends GraphicsProgram
     }
 
     public void initGame(){
-        PADDLE_Y = HEIGHT-PADDLE_HEIGHT-PADDLE_Y_OFFSET;
         setupBricks();
         setupPaddle();
         while(true){
-            //updateBalls();
-            //checkForCollisions();
+            updateBall();
+            checkForCollisions();
         }
     }
 
@@ -101,8 +100,19 @@ public class Breakout extends GraphicsProgram
                         break;
                 }
                 add(block);
+                bricksLeft++;
             }
         }
+    }
+
+    public void setupBall(){
+        ball = new GOval(WIDTH, HEIGHT, BALL_RADIUS * 2, BALL_RADIUS * 2);
+        ball.setFilled(true);
+        add(ball);
+    }
+    
+    public void updateBall(){
+        ball.move(vx, vy);
     }
 
     public void setupPaddle()
@@ -124,33 +134,31 @@ public class Breakout extends GraphicsProgram
 
     public void checkForCollisions(){
         GObject obj;
-        for (int i=0; i<Balls.length; i++){
-            GOval oval = Balls[i];
-            if(oval == null){
-                continue;
+        GOval oval = ball;
+        if(oval == null){
+            return;
+        }
+        if(getElementAt(oval.getX(), oval.getY()) != null){
+            obj = getElementAt(oval.getX(), oval.getY());
+        } else if (getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY()) != null){
+            obj = getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY());
+        } else if (getElementAt(oval.getX(), oval.getY() + BALL_RADIUS*2) != null){
+            obj = getElementAt(oval.getX(), oval.getY() + BALL_RADIUS*2);
+        } else if (getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY() + BALL_RADIUS*2) != null){
+            obj = getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY() + BALL_RADIUS*2);
+        } else {
+            obj = null;
+        }
+        if(obj == paddle){
+            vy = -Math.abs(vy);
+        } else if (obj instanceof GRect){
+            remove(obj);
+            bricksLeft--;
+            if(bricksLeft == 0){
+                //add endgame function here
+                
             }
-            if(getElementAt(oval.getX(), oval.getY()) != null){
-                obj = getElementAt(oval.getX(), oval.getY());
-            } else if (getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY()) != null){
-                obj = getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY());
-            } else if (getElementAt(oval.getX(), oval.getY() + BALL_RADIUS*2) != null){
-                obj = getElementAt(oval.getX(), oval.getY() + BALL_RADIUS*2);
-            } else if (getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY() + BALL_RADIUS*2) != null){
-                obj = getElementAt(oval.getX() + BALL_RADIUS*2, oval.getY() + BALL_RADIUS*2);
-            } else {
-                obj = null;
-            }
-            if(obj == paddle){
-                vy[i] = -Math.abs(vy[i]);
-            } else if (obj instanceof GRect){
-                remove(obj);
-                bounceClip.play();
-                bricksLeft--;
-                if(bricksLeft == 0){
-                    initGameOver(true);
-                }
-                vy[i] = -vy[i];
-            }
+            vy = -vy;
         }
     }
 }
