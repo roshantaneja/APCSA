@@ -52,23 +52,38 @@ public class Breakout extends GraphicsProgram
     /** Global variables declared here.  You should feel free to add others as needed. */
     GRect paddle;
     GOval ball;
+    GLabel gameOver;
+    GLabel endMessage;
     double vx;
     double vy;
     int bricksLeft;
+    int currLives;
     int PADDLE_Y = HEIGHT-PADDLE_HEIGHT-PADDLE_Y_OFFSET;
+    STATE s;
+    
+    public enum STATE { //use so that no more loops outside of game
+        START, GAME, END
+    }
 
     /** Runs the Breakout program. */
     public void run() 
     {
+        
         initGame();
     }
 
     public void initGame(){
         setupBricks();
         setupPaddle();
+        setupBall();
+        vx = Math.random()*2 + 1;
+        vy = -(Math.random()*2 + 1);
+        currLives = NUM_LIVES;
+        
         while(true){
             updateBall();
             checkForCollisions();
+            pause(3);
         }
     }
 
@@ -106,12 +121,29 @@ public class Breakout extends GraphicsProgram
     }
 
     public void setupBall(){
-        ball = new GOval(WIDTH, HEIGHT, BALL_RADIUS * 2, BALL_RADIUS * 2);
+        ball = new GOval(WIDTH/2, HEIGHT/2, BALL_RADIUS * 2, BALL_RADIUS * 2);
         ball.setFilled(true);
         add(ball);
     }
     
     public void updateBall(){
+        
+        if(ball.getY() <0){
+            vy = -vy;
+        }
+        if (ball.getY() > HEIGHT-BALL_RADIUS*2){
+            currLives--;
+            if (currLives > 0){
+                setupBall();
+                pause(1000);
+            } else {
+                initEndGame(false);
+            }
+        }
+        if(ball.getX() < 0 || ball.getX() > WIDTH){
+            vx = -vx;
+        }
+        
         ball.move(vx, vy);
     }
 
@@ -150,15 +182,37 @@ public class Breakout extends GraphicsProgram
             obj = null;
         }
         if(obj == paddle){
+            vx = vx + Math.random();
+            vy = vy + Math.random();
             vy = -Math.abs(vy);
         } else if (obj instanceof GRect){
             remove(obj);
             bricksLeft--;
             if(bricksLeft == 0){
                 //add endgame function here
-                
+                initEndGame(true);
             }
             vy = -vy;
         }
+    }
+    
+    public void initEndGame(boolean isVictory){
+        removeAll();
+        gameOver = new GLabel("Game Over!");
+        gameOver.setFont("TimesNewRoman-Bold-24");
+        gameOver.setLocation(WIDTH/2-gameOver.getWidth()/2, 100);
+        add(gameOver);
+        
+        if(isVictory){
+            endMessage = new GLabel("You won! You had " + currLives + " lives left.");
+            endMessage.setColor(Color.green);
+        } else {
+            endMessage = new GLabel("You lost! You had " + bricksLeft + " bricks left.");
+            endMessage.setColor(Color.red);
+        }
+        
+        endMessage.setFont("TimesNewRoman-Plain-18");
+        endMessage.setLocation(WIDTH/2-endMessage.getWidth()/2, 130);
+        add(endMessage);
     }
 }

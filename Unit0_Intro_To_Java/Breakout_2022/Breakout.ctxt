@@ -17,4 +17,6 @@ comment7.params=event
 comment7.target=void\ mouseMoved(java.awt.event.MouseEvent)
 comment8.params=
 comment8.target=void\ checkForCollisions()
-numComments=9
+comment9.params=isVictory
+comment9.target=void\ initEndGame(boolean)
+numComments=10
