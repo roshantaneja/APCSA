@@ -54,6 +54,8 @@ public class Breakout extends GraphicsProgram
     GOval ball;
     GLabel gameOver;
     GLabel endMessage;
+    GLabel lives;
+    GLabel startButton;
     double vx;
     double vy;
     int bricksLeft;
@@ -68,23 +70,23 @@ public class Breakout extends GraphicsProgram
     /** Runs the Breakout program. */
     public void run() 
     {
+        setupStartButton();
+        s = STATE.START;
+        while (true){
+            pause(5);
+            if (s == STATE.GAME){
+                animationLoop();
+            }
+        }
         
-        initGame();
     }
 
     public void initGame(){
         setupBricks();
         setupPaddle();
         setupBall();
-        vx = Math.random()*2 + 1;
-        vy = -(Math.random()*2 + 1);
         currLives = NUM_LIVES;
-        
-        while(true){
-            updateBall();
-            checkForCollisions();
-            pause(3);
-        }
+        setupLives();
     }
 
     public void setupBricks(){
@@ -121,30 +123,11 @@ public class Breakout extends GraphicsProgram
     }
 
     public void setupBall(){
+        vx = Math.random()*2 + 1;
+        vy = -(Math.random()*2 + 1);
         ball = new GOval(WIDTH/2, HEIGHT/2, BALL_RADIUS * 2, BALL_RADIUS * 2);
         ball.setFilled(true);
         add(ball);
-    }
-    
-    public void updateBall(){
-        
-        if(ball.getY() <0){
-            vy = -vy;
-        }
-        if (ball.getY() > HEIGHT-BALL_RADIUS*2){
-            currLives--;
-            if (currLives > 0){
-                setupBall();
-                pause(1000);
-            } else {
-                initEndGame(false);
-            }
-        }
-        if(ball.getX() < 0 || ball.getX() > WIDTH){
-            vx = -vx;
-        }
-        
-        ball.move(vx, vy);
     }
 
     public void setupPaddle()
@@ -153,8 +136,27 @@ public class Breakout extends GraphicsProgram
         paddle.setFilled(true);
         add(paddle);
     }
+    
+    public void setupLives(){
+        lives = new GLabel ("Lives: " + currLives, 10, HEIGHT - 40);
+        lives.setFont("TimesNewRoman-Bold-20");
+        add(lives);
+    }
+
+    public void setupStartButton(){
+        startButton = new GLabel("Click to Start", WIDTH/2, HEIGHT/2 - 100)
+    }
 
     public void mouseMoved(MouseEvent event){
+        if (s == STATE.START){
+            if(getElementAt(event.getX(), event.getY()) == startButton){ //if cursor on target, turn black
+                startButton.setColor(Color.pink);
+            } else {
+                startButton.setColor(Color.black);
+        }
+
+
+
         paddle.setLocation(event.getX() - PADDLE_WIDTH/2, APPLICATION_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT);
         if(paddle.getX()<0){
             paddle.setLocation(0, PADDLE_Y);
@@ -162,6 +164,37 @@ public class Breakout extends GraphicsProgram
         if(paddle.getX()> WIDTH-PADDLE_WIDTH){
             paddle.setLocation(WIDTH-PADDLE_WIDTH, PADDLE_Y);
         }
+    }
+
+    public void mouseClicked(MouseEvent event){
+        if (s = STATE.START){
+            if(getElementAt(event.getX(), event.getY()) == startButton) {
+                initGame();
+                s = STATE.GAME;
+            }
+        }
+    }
+
+    public void updateBall(){
+        if(ball.getY() <0){
+            vy = -vy;
+        }
+        if (ball.getY() > HEIGHT - BALL_RADIUS*2){
+            currLives--;
+            lives.setText("Lives: " + currLives);
+            if (currLives > 0){
+                vx = Math.random()*2;
+                vy = -(Math.random()*2);
+                setupBall();
+                pause(1000);
+            } else {
+                initEndGame(false);
+            }
+        }
+        if(ball.getX() < 0 || ball.getX() > WIDTH - BALL_RADIUS*2){
+            vx = -vx;
+        }
+        ball.move(vx, vy);
     }
 
     public void checkForCollisions(){
@@ -182,8 +215,8 @@ public class Breakout extends GraphicsProgram
             obj = null;
         }
         if(obj == paddle){
-            vx = vx + Math.random();
-            vy = vy + Math.random();
+            vx = vx * 1.02;
+            vy = vy * 1.02;
             vy = -Math.abs(vy);
         } else if (obj instanceof GRect){
             remove(obj);
@@ -191,9 +224,15 @@ public class Breakout extends GraphicsProgram
             if(bricksLeft == 0){
                 //add endgame function here
                 initEndGame(true);
+                s = STATE.END;
             }
             vy = -vy;
         }
+    }
+    
+    public void animationLoop(){
+        updateBall();
+        checkForCollisions();
     }
     
     public void initEndGame(boolean isVictory){
