@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=CashRegister
+comment1.params=
+comment1.target=CashRegister()
+comment2.params=price
+comment2.target=void\ recordPurchase(double)
+comment3.params=amount
+comment3.target=void\ enterPayment(double)
+comment4.params=
+comment4.target=double\ getChange()
+comment5.params=
+comment5.target=void\ reset()
+numComments=6
