@@ -56,13 +56,14 @@ public class Breakout extends GraphicsProgram
     GLabel endMessage;
     GLabel lives;
     GLabel startButton;
+    GLabel restartButton;
     double vx;
     double vy;
     int bricksLeft;
     int currLives;
     int PADDLE_Y = HEIGHT-PADDLE_HEIGHT-PADDLE_Y_OFFSET;
     STATE s;
-    
+
     public enum STATE { //use so that no more loops outside of game
         START, GAME, END
     }
@@ -78,7 +79,7 @@ public class Breakout extends GraphicsProgram
                 animationLoop();
             }
         }
-        
+
     }
 
     public void initGame(){
@@ -136,7 +137,7 @@ public class Breakout extends GraphicsProgram
         paddle.setFilled(true);
         add(paddle);
     }
-    
+
     public void setupLives(){
         lives = new GLabel ("Lives: " + currLives, 10, HEIGHT - 40);
         lives.setFont("TimesNewRoman-Bold-20");
@@ -144,19 +145,27 @@ public class Breakout extends GraphicsProgram
     }
 
     public void setupStartButton(){
-        startButton = new GLabel("Click to Start", WIDTH/2, HEIGHT/2 - 100)
+        startButton = new GLabel("Click to Start");
+        startButton.setFont("TimesNewRoman-Bold-20");
+        startButton.setLocation(WIDTH/2 - startButton.getWidth()/2, HEIGHT/2);
+        add(startButton);
+    }
+    
+    public void setupRestartButton(){
+        restartButton = new GLabel("Click to Restart!", WIDTH/2 - restartButton.getWidth(), 115);
+        restartButton.setFont("TimesNewRoman-Plain-24");
+        restartButton.setLocation(WIDTH/2 - restartButton.getWidth()/2, HEIGHT/2);
+        add(restartButton);
     }
 
     public void mouseMoved(MouseEvent event){
         if (s == STATE.START){
-            if(getElementAt(event.getX(), event.getY()) == startButton){ //if cursor on target, turn black
+            if(getElementAt(event.getX(), event.getY()) == startButton){ //if cursor on target, turn pink else, turn black
                 startButton.setColor(Color.pink);
             } else {
                 startButton.setColor(Color.black);
+            }
         }
-
-
-
         paddle.setLocation(event.getX() - PADDLE_WIDTH/2, APPLICATION_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT);
         if(paddle.getX()<0){
             paddle.setLocation(0, PADDLE_Y);
@@ -167,9 +176,19 @@ public class Breakout extends GraphicsProgram
     }
 
     public void mouseClicked(MouseEvent event){
-        if (s = STATE.START){
+        if (s == STATE.START){
             if(getElementAt(event.getX(), event.getY()) == startButton) {
+                remove(startButton);
                 initGame();
+                pause(300);
+                s = STATE.GAME;
+            }
+        }
+        if (s == STATE.END){
+            if(getElementAt(event.getX(), event.getY()) == restartButton) {
+                remove(restartButton);
+                initGame();
+                pause(300);
                 s = STATE.GAME;
             }
         }
@@ -229,19 +248,19 @@ public class Breakout extends GraphicsProgram
             vy = -vy;
         }
     }
-    
+
     public void animationLoop(){
         updateBall();
         checkForCollisions();
     }
-    
+
     public void initEndGame(boolean isVictory){
         removeAll();
         gameOver = new GLabel("Game Over!");
         gameOver.setFont("TimesNewRoman-Bold-24");
         gameOver.setLocation(WIDTH/2-gameOver.getWidth()/2, 100);
         add(gameOver);
-        
+
         if(isVictory){
             endMessage = new GLabel("You won! You had " + currLives + " lives left.");
             endMessage.setColor(Color.green);
@@ -250,6 +269,8 @@ public class Breakout extends GraphicsProgram
             endMessage.setColor(Color.red);
         }
         
+        setupRestartButton();
+
         endMessage.setFont("TimesNewRoman-Plain-18");
         endMessage.setLocation(WIDTH/2-endMessage.getWidth()/2, 130);
         add(endMessage);
