@@ -52,8 +52,6 @@ public class Breakout extends GraphicsProgram
     /** Global variables declared here.  You should feel free to add others as needed. */
     GRect paddle;
     GOval ball;
-    GLabel gameOver;
-    GLabel endMessage;
     GLabel lives;
     GLabel startButton;
     GLabel restartButton;
@@ -65,7 +63,7 @@ public class Breakout extends GraphicsProgram
     int PADDLE_Y = HEIGHT-PADDLE_HEIGHT-PADDLE_Y_OFFSET;
     STATE s;
 
-    public enum STATE { //use so that no more loops outside of game
+    public enum STATE { //use so that no more loops outside of game and also while using constants it kinda broke lmao
         START, GAME, END
     }
 
@@ -96,7 +94,7 @@ public class Breakout extends GraphicsProgram
             for(int j=0; j<NBRICKS_PER_ROW; j++){
                 GRect block = new GRect((BRICK_WIDTH+BRICK_SEP)*j, (BRICK_HEIGHT+BRICK_SEP)*i + BRICK_Y_OFFSET, BRICK_WIDTH, BRICK_HEIGHT);
                 block.setFilled(true);
-                switch(i){
+                switch(i){ //idk if we allowed to use this because we havent learned this yet
                     case 0:
                     case 1:
                         block.setColor(Color.red);
@@ -274,11 +272,14 @@ public class Breakout extends GraphicsProgram
 
     public void initEndGame(boolean isVictory){
         removeAll();
+        
+        GLabel gameOver;
         gameOver = new GLabel("Game Over!");
         gameOver.setFont("TimesNewRoman-Bold-24");
         gameOver.setLocation(WIDTH/2-gameOver.getWidth()/2, 100);
         add(gameOver);
-
+        
+        GLabel endMessage;
         if(isVictory){
             endMessage = new GLabel("You won! You had " + currLives + " lives left.");
             endMessage.setColor(Color.green);
@@ -286,12 +287,12 @@ public class Breakout extends GraphicsProgram
             endMessage = new GLabel("You lost! You had " + bricksLeft + " bricks left.");
             endMessage.setColor(Color.red);
         }
-        
-        setupRestartButton();
 
         endMessage.setFont("TimesNewRoman-Plain-18");
         endMessage.setLocation(WIDTH/2-endMessage.getWidth()/2, 130);
         add(endMessage);
+        
+        setupRestartButton();
         
         s = STATE.END;
     }
