@@ -57,6 +57,7 @@ public class Breakout extends GraphicsProgram
     GLabel lives;
     GLabel startButton;
     GLabel restartButton;
+    AudioClip bounceClip = MediaTools.loadAudioClip("bounce.au");
     double vx;
     double vy;
     int bricksLeft;
@@ -145,6 +146,12 @@ public class Breakout extends GraphicsProgram
     }
 
     public void setupStartButton(){
+        GLabel titleText = new GLabel("Breakout by Roshan");
+        titleText.setFont("TimesNewRoman-Bold-36");
+        titleText.setLocation(WIDTH/2 - titleText.getWidth()/2, HEIGHT/2 - 100);
+        add(titleText);
+        
+        
         startButton = new GLabel("Click to Start");
         startButton.setFont("TimesNewRoman-Bold-20");
         startButton.setLocation(WIDTH/2 - startButton.getWidth()/2, HEIGHT/2);
@@ -152,7 +159,7 @@ public class Breakout extends GraphicsProgram
     }
     
     public void setupRestartButton(){
-        restartButton = new GLabel("Click to Restart!", WIDTH/2 - restartButton.getWidth(), 115);
+        restartButton = new GLabel("Click to Restart!");
         restartButton.setFont("TimesNewRoman-Plain-24");
         restartButton.setLocation(WIDTH/2 - restartButton.getWidth()/2, HEIGHT/2);
         add(restartButton);
@@ -166,19 +173,28 @@ public class Breakout extends GraphicsProgram
                 startButton.setColor(Color.black);
             }
         }
-        paddle.setLocation(event.getX() - PADDLE_WIDTH/2, APPLICATION_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT);
-        if(paddle.getX()<0){
-            paddle.setLocation(0, PADDLE_Y);
+        if (s == STATE.GAME){
+            paddle.setLocation(event.getX() - PADDLE_WIDTH/2, APPLICATION_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT);
+            if(paddle.getX()<0){
+                paddle.setLocation(0, PADDLE_Y);
+            }
+            if(paddle.getX()> WIDTH-PADDLE_WIDTH){
+                paddle.setLocation(WIDTH-PADDLE_WIDTH, PADDLE_Y);
+            }
         }
-        if(paddle.getX()> WIDTH-PADDLE_WIDTH){
-            paddle.setLocation(WIDTH-PADDLE_WIDTH, PADDLE_Y);
+        if (s == STATE.END){
+            if(getElementAt(event.getX(), event.getY()) == startButton){ //if cursor on target, turn pink else, turn black
+                startButton.setColor(Color.pink);
+            } else {
+                startButton.setColor(Color.black);
+            }
         }
     }
 
     public void mouseClicked(MouseEvent event){
         if (s == STATE.START){
             if(getElementAt(event.getX(), event.getY()) == startButton) {
-                remove(startButton);
+                removeAll();
                 initGame();
                 pause(300);
                 s = STATE.GAME;
@@ -186,7 +202,7 @@ public class Breakout extends GraphicsProgram
         }
         if (s == STATE.END){
             if(getElementAt(event.getX(), event.getY()) == restartButton) {
-                remove(restartButton);
+                removeAll();
                 initGame();
                 pause(300);
                 s = STATE.GAME;
@@ -237,9 +253,11 @@ public class Breakout extends GraphicsProgram
             vx = vx * 1.02;
             vy = vy * 1.02;
             vy = -Math.abs(vy);
+            bounceClip.play();
         } else if (obj instanceof GRect){
             remove(obj);
             bricksLeft--;
+            bounceClip.play();
             if(bricksLeft == 0){
                 //add endgame function here
                 initEndGame(true);
@@ -274,5 +292,7 @@ public class Breakout extends GraphicsProgram
         endMessage.setFont("TimesNewRoman-Plain-18");
         endMessage.setLocation(WIDTH/2-endMessage.getWidth()/2, 130);
         add(endMessage);
+        
+        s = STATE.END;
     }
 }
