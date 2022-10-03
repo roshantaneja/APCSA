@@ -1,6 +1,6 @@
 Welcome to my APCSA Homework Repo!
 
-Hours spent doing homework: 1.5
+Hours spent doing homework: 3.5
 
 `will update as more work completed`
 
