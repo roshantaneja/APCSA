@@ -1,4 +1,3 @@
-
 import acm.program.*;
 import acm.graphics.*;
 import java.awt.Color;
