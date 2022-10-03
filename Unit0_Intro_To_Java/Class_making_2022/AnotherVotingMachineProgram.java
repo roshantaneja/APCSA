@@ -11,7 +11,6 @@ public class AnotherVotingMachineProgram extends GraphicsProgram
     private GOval rigCircle;
     private GLabel resultLabel;
     private VotingMachine ballot;
-    
 
     public void run()
     {
