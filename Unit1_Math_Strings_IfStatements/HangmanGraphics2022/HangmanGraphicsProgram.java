@@ -1,4 +1,4 @@
-
+//Roshan Taneja
 import acm.program.*;
 import acm.graphics.*;
 import java.awt.Color;
@@ -226,6 +226,8 @@ public class HangmanGraphicsProgram extends GraphicsProgram
         waitForClick();
         removeAll();
     }
+
+
 
     
 }
