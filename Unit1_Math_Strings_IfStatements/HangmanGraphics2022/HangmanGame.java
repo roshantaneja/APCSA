@@ -8,7 +8,7 @@ public class HangmanGame
     public HangmanGame()
     {
         actualAnswer = RandomWordGenerator.getRandomWord();
-        guessesLeft = 7;
+        guessesLeft = 10;
         lettersGuessed = "";
     }
 
