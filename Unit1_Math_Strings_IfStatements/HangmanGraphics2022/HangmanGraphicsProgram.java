@@ -1,12 +1,15 @@
 //Roshan Taneja
+
 import acm.program.*;
 import acm.graphics.*;
+
 import java.awt.Color;
 import java.awt.event.*;
 
-public class HangmanGraphicsProgram extends GraphicsProgram
-{
-    /** Width and height of application window in pixels */
+public class HangmanGraphicsProgram extends GraphicsProgram {
+    /**
+     * Width and height of application window in pixels
+     */
     public static final int APPLICATION_WIDTH = 800;
     public static final int APPLICATION_HEIGHT = 500;
     private static final int WIDTH = APPLICATION_WIDTH;
@@ -22,6 +25,8 @@ public class HangmanGraphicsProgram extends GraphicsProgram
     private HangmanGame game;
     private boolean isPlaying;
 
+    /*hangman images, too many of them to i just mad them
+    h0-h1-h2 etc, hopefully this still counts as readable*/
     private GImage h0;
     private GImage h1;
     private GImage h2;
@@ -35,8 +40,7 @@ public class HangmanGraphicsProgram extends GraphicsProgram
     private GImage h10;
 
 
-    public void run()
-    {
+    public void run() {
         initMenu();
 
         while (true) {
@@ -44,22 +48,22 @@ public class HangmanGraphicsProgram extends GraphicsProgram
         }
     }
 
-    public void initMenu(){
+    public void initMenu() {
         GLabel title = new GLabel("HANG-MAN");
         title.setFont("TimesNewRoman-Bold-30");
-        title.setLocation(WIDTH/2-title.getWidth()/2, 60);
+        title.setLocation(WIDTH / 2 - title.getWidth() / 2, 60);
 
         add(title);
 
         GLabel byWho = new GLabel("By: Roshan Taneja");
         byWho.setFont("TimesNewRoman-Plain-18");
-        byWho.setLocation(WIDTH/2-byWho.getWidth()/2, 100);
+        byWho.setLocation(WIDTH / 2 - byWho.getWidth() / 2, 100);
 
         add(byWho);
 
         GLabel playButton = new GLabel("Click to Play");
         playButton.setFont("TimesNewRoman-Bold-20");
-        playButton.setLocation(WIDTH/2-playButton.getWidth()/2, HEIGHT/2-playButton.getHeight()/2);
+        playButton.setLocation(WIDTH / 2 - playButton.getWidth() / 2, HEIGHT / 2 - playButton.getHeight() / 2);
 
         add(playButton);
 
@@ -76,10 +80,10 @@ public class HangmanGraphicsProgram extends GraphicsProgram
 
         while (isPlaying) {
             pause(10);
-            if(game.getPuzzle().equals(game.getActualAnswer())) isPlaying = false;
+            if (game.getPuzzle().equals(game.getActualAnswer())) isPlaying = false;
         }
 
-        if (game.getGuessesLeft() == 0){
+        if (game.getGuessesLeft() == 0) {
             endGame(false);
         } else {
             endGame(true);
@@ -89,14 +93,13 @@ public class HangmanGraphicsProgram extends GraphicsProgram
     public void initPuzzle() {
         puzzleLabel = new GLabel(game.getPuzzle());
         int fontSize = 64;
-        puzzleLabel.setFont("Monospaced-plain-"+fontSize);
+        puzzleLabel.setFont("Monospaced-plain-" + fontSize);
         // the while loop below makes the puzzle as large as possible so that it fits
-        while(puzzleLabel.getWidth()>WIDTH)
-        {
+        while (puzzleLabel.getWidth() > WIDTH) {
             fontSize--;
-            puzzleLabel.setFont("*-*-"+fontSize);
+            puzzleLabel.setFont("*-*-" + fontSize);
         }
-        puzzleLabel.setLocation((WIDTH-puzzleLabel.getWidth())/2, PUZZLE_Y_OFFSET);
+        puzzleLabel.setLocation((WIDTH - puzzleLabel.getWidth()) / 2, PUZZLE_Y_OFFSET);
         add(puzzleLabel);
     }
 
@@ -108,7 +111,11 @@ public class HangmanGraphicsProgram extends GraphicsProgram
     }
 
     public void initHangmanGraphic() {
-        //i know this method is kinda overkill but i wanted to do an array instead but i didnt know how to manipulate the GImage objects because i ran out of time
+        /*i know this method is kinda overkill
+        i wanted to do an array of image objects instead
+        i didnt get to that point to manipulate the
+        GImage objects because i ran out of time*/
+
         h0 = new GImage("0.jpg");
         h1 = new GImage("1.jpg");
         h2 = new GImage("2.jpg");
@@ -141,46 +148,37 @@ public class HangmanGraphicsProgram extends GraphicsProgram
         image.setBounds(WIDTH - image.getWidth() - 30, 100, image.getWidth(), image.getHeight());
     }
 
-    public void drawBodyPart(){
+    public void drawBodyPart() {
         int lives = game.getGuessesLeft();
         if (isPlaying) {
-            if(lives == 9) {
+            if (lives == 9) {
                 remove(h0);
                 add(h1);
-            }
-            else if (lives == 8) {
+            } else if (lives == 8) {
                 remove(h1);
                 add(h2);
-            }
-            else if (lives == 7) {
+            } else if (lives == 7) {
                 remove(h2);
                 add(h3);
-            }
-            else if (lives == 6) {
+            } else if (lives == 6) {
                 remove(h3);
                 add(h4);
-            }
-            else if (lives == 5) {
+            } else if (lives == 5) {
                 remove(h4);
                 add(h5);
-            }
-            else if (lives == 4) {
+            } else if (lives == 4) {
                 remove(h5);
                 add(h6);
-            }
-            else if (lives == 3) {
+            } else if (lives == 3) {
                 remove(h6);
                 add(h7);
-            }
-            else if (lives == 2) {
+            } else if (lives == 2) {
                 remove(h7);
                 add(h8);
-            }
-            else if (lives == 1) {
+            } else if (lives == 1) {
                 remove(h8);
                 add(h9);
-            }
-            else {
+            } else {
                 remove(h9);
                 add(h10);
                 isPlaying = false;
@@ -188,11 +186,11 @@ public class HangmanGraphicsProgram extends GraphicsProgram
         }
     }
 
-    public void keyPressed(KeyEvent event)
-    {
-        String letter = KeyEvent.getKeyText(event.getKeyCode()).toUpperCase();  
+    public void keyPressed(KeyEvent event) {
+        String letter = KeyEvent.getKeyText(event.getKeyCode()).toUpperCase();
         // add code here to finish task #1
-        if(game.makeGuess(letter)) {
+        
+        if (game.makeGuess(letter)) {
             puzzleLabel.setText(game.getPuzzle());
         } else {
             drawBodyPart();
@@ -206,7 +204,7 @@ public class HangmanGraphicsProgram extends GraphicsProgram
 
         GLabel gameOverMessage;
 
-        if (hasWon){
+        if (hasWon) {
             gameOverMessage = new GLabel("You won! the word was: " + game.getActualAnswer() + ".");
             gameOverMessage.setColor(Color.GREEN);
         } else {
@@ -215,19 +213,16 @@ public class HangmanGraphicsProgram extends GraphicsProgram
         }
 
         gameOverMessage.setFont("TimesNewRoman-Bold-24");
-        gameOverMessage.setLocation(WIDTH/2 - gameOverMessage.getWidth()/2, 50);
+        gameOverMessage.setLocation(WIDTH / 2 - gameOverMessage.getWidth() / 2, 50);
         add(gameOverMessage);
         pause(50);
 
         GLabel playAgain = new GLabel("Click to Play Again.");
         playAgain.setFont("TimesNewRoman-Bold-20");
-        playAgain.setLocation(WIDTH/2 - playAgain.getWidth()/2, HEIGHT/2 - playAgain.getHeight()/2);
+        playAgain.setLocation(WIDTH / 2 - playAgain.getWidth() / 2, HEIGHT / 2 - playAgain.getHeight() / 2);
         add(playAgain);
         waitForClick();
         removeAll();
     }
 
-
-
-    
 }
