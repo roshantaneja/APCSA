@@ -2,4 +2,6 @@
 comment0.target=LeapYearProgram
 comment1.params=
 comment1.target=void\ run()
-numComments=2
+comment2.params=year
+comment2.target=boolean\ isLeapYear(int)
+numComments=3
