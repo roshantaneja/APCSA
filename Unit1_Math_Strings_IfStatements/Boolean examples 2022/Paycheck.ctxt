@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Paycheck
+comment0.text=\ Note\:\ You\ can\ test\ this\ by\ compiling\ it,\ then\n\ \ \ \ \ \ \ right-clicking\ on\ Paycheck\ and\ selecting\n\ \ \ \ \ \ \ "new\ Paycheck".\ \ Then,\ enter\ the\ hours\ and\n\ \ \ \ \ \ \ rate,\ and\ click\ "OK".\ \ Then,\ a\ Paycheck\ \n\ \ \ \ \ \ \ instance\ will\ show\ up\ as\ a\ red\ rectangle\n\ \ \ \ \ \ \ on\ the\ instance\ shelf\ at\ the\ bottom.\ \ Click\ \n\ \ \ \ \ \ \ on\ that\ red\ instance\ and\ select\ getAmount().\n\ \ \ \ \ \ \ Did\ you\ get\ the\ correct\ amount\ of\ your\ check?\n\ \ \ \ \ \ \ You\ might\ have\ to\ do\ a\ little\ math\ to\ check...\n
+comment1.params=hours\ rate
+comment1.target=Paycheck(double,\ double)
+comment2.params=
+comment2.target=double\ getAmount()
+numComments=3
