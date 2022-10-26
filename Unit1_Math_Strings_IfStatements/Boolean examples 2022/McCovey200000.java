@@ -16,7 +16,7 @@ public class McCovey200000 extends GraphicsProgram
     {
         
         // all you should need to do is change the next two lines
-        p1 = new Roshan();
+        p1 = new Roshan1();
         p2 = new Winner2022();
         
         bar1 = new GRect(0,100,0,100);

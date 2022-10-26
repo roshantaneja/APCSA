@@ -26,7 +26,8 @@ public class McCoveyGUI extends Program
         addPlayerClass("GetTo9Player");
         addPlayerClass("VeryGoodPlayer");
         addPlayerClass("Winner2022");
-
+        addPlayerClass("Roshan");
+        
         setSize(900,300);
         setLayout(new GridLayout(2,1));
 

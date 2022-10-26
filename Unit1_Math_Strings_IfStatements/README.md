@@ -9,9 +9,9 @@ You can typecast a double to an int: `int x = (int)(2.7);`
 
 `Math.sqrt`, `Math.abs`, `Math.pow`, `Math.random` `Math.round`, `Math.ceil`, `Math.floor` 
 
-Math.random() can be used to get any random number
+`Math.random()` can be used to get any random number
 
-Doubles are somewhat inexact
+Doubles are somewhat inexact {citation needed}
 
 Understand integer division and mod, using / and %
 
