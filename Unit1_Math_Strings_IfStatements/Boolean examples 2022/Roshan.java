@@ -8,7 +8,7 @@ public class Roshan implements McCoveyPlayer
             return false;
         } else if (myScore + turnScore > 32) { // spend time
             return true;
-        } else if (myScore > 30) {
+        } else if (myScore > 31) {
             return true;
         } else if (yourScore > 30) {
             return true;
@@ -18,12 +18,12 @@ public class Roshan implements McCoveyPlayer
             return turnScore < 15;
         } else if (myScore + turnScore < yourScore - 10) { // spend time
             return turnScore < 16;
-        } else if (myScore + turnScore < yourScore - 15) { // spend time
-            return turnScore < 17;
-        } else if (myScore + turnScore < yourScore - 26) {
-            return turnScore < 21;
+        } else if (myScore + turnScore < yourScore - 15) {
+            return turnScore < 15;
+        } else if (myScore + turnScore < yourScore - 17) { // spend time
+            return turnScore < 19;
         } else if (myScore + turnScore > 27) {
-            return turnScore < 10;
+            return turnScore < 11;
         } else {
             return turnScore < 13;
         }

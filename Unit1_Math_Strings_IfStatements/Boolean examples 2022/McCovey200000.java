@@ -12,12 +12,13 @@ public class McCovey200000 extends GraphicsProgram
     private GLabel text;
     private GLabel infoText;
 
+    
     public void run()
     {
 
         // all you should need to do is change the next two lines
-        p1 = new Roshan();
-        p2 = new Winner2022();
+        p1 = new Winner2022();
+        p2 = new Roshan();
 
         bar1 = new GRect(0,100,0,100);
         bar1.setColor(Color.RED);
@@ -35,7 +36,7 @@ public class McCovey200000 extends GraphicsProgram
         add(infoText);
         //waitForClick();
         infoText.setLabel("");
-        game = new McCoveyGame("One", "Two", 100000);        
+        game = new McCoveyGame("One", "Two", 1000000);
 
         while (game.getGamesLeft()>0)
         {
@@ -65,7 +66,7 @@ public class McCovey200000 extends GraphicsProgram
             }
 
         }
-        game2 = new McCoveyGame("One", "Two", 100000);         
+        game2 = new McCoveyGame("One", "Two", 1000000);
         infoText.setLabel("Click to play 100000 games with " + getName(p2) + " going first");
         //waitForClick();
         infoText.setLabel("");
