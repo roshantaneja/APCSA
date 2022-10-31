@@ -57,3 +57,44 @@ You can always eliminate `== true`.    That is, `if (isWorking == true)` is equi
 Multiple nested if-statements can often be condensed using && and ||.
 
 The pattern if (whatever) return true; else return false; can be condensed into return whatever;
+
+---
+
+### What you should know about Math.Random()
+
+Heres how to flip a coin
+```
+if (Math.random() < 0.5) {
+    println(“Heads”);
+else
+    println(“Tails”);
+}
+```
+
+Some basic usages of Math.random()
+```
+double numberBetweenZeroAndFifteen = (int) (Math.random() * 16);
+double numberBetweenTwoAndSeven = (int) (Math.random() * 6 + 2);
+int numberBetweenZeroAndFifty = (int) (Math.random() * 51);
+int numberBetweenOneAndTen = (int) (Math.random() * 10 + 1);
+int numberBetweenTwoAndTwenty = (int) (Math.random() * 19 + 2);
+int numberBetweenNegativeEightAndEight = (int) (Math.random() * 17 - 8);
+int randomTwoDigitNumber = (int) (Math.random() * 90 + 10);
+```
+
+Create a random slope from a line
+```
+double slope;
+// we want slope to be either between [-3.0, -1.0] or [1.0, 3.0]
+slope = Math.random()*2 + 1;
+if (Math.random < 0.5>){
+    slope = -slope;
+}
+```
+A random letter from a string
+```
+String word = readLine(“Enter a word”);
+String oneRandomLetterFromWord;
+index = (int) (Math.random()* word.length());
+oneRandomLetterFromWord = word.substring(index, index + 1);
+```
