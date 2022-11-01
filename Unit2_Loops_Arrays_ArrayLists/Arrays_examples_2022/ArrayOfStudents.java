@@ -9,15 +9,39 @@ public class ArrayOfStudents extends ConsoleProgram
         String[] students;
         students = new String[21];
         initializeStudents(students);
-        
-        println(students[0].substring(3,5) + 
-                students[10].substring(7,9) + 
-                students[9].substring(1,3));
+        /*
+        println(students[0].substring(3,5) + //mo
+        students[10].substring(7,9) + //rr
+        students[9].substring(1,3)); //is
         if (students[12].length() > students[6].length())
-            println(students[3]);
+        println(students[3]);
         else
-            println(students[15]);
-       }
+        println(students[15]);
+
+        for (int i = 0; i < students.length; i ++) {
+        if             
+        println(students[i]);
+        }
+
+        for (int i = 0; i < students.length; i ++)
+        if (students[i].toLowerCase().indexOf("a") == -1)
+        println(students[i]);
+
+        int counter = 0;
+        for (int i = 0; i < students.length; i ++) {
+        if (students[i].toLowerCase().indexOf("k") != -1)
+        counter ++;
+        }
+        println(counter);
+         */
+
+        int indexOfLongest = 0;
+        for (int i = 1; i < students.length; i ++) {
+            if (students[i].length() > students[indexOfLongest].length())
+                indexOfLongest = i;
+        }
+        println(students[indexOfLongest]);
+    }
 
     public void initializeStudents(String[] students)
     {
