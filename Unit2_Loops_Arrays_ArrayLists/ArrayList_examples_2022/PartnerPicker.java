@@ -33,19 +33,26 @@ public class PartnerPicker extends ConsoleProgram
     
     public void initializeStudents(ArrayList<String> students)
     {
-        students.add("Amelie Boom");
-        students.add("Ellie Brew");
-        students.add("Nicholas Chin");
-        students.add("Alberto Clegg Gonzalez");
-        students.add("Neha Lalia");
-        students.add("Leila Nawas");
-        students.add("Nic Nikcevic");
-        students.add("Theo Parker");
-        students.add("Ava Shenk");
-        students.add("Ian Smith");
-        students.add("Bella Summe");
-        students.add("Colleen Tanona");
-        students.add("Louka Triant");
-        students.add("Catherine Zhu");
+        students.add("Redmond Averbuck");
+        students.add("Natasha Bamdad");
+        students.add("Ariv Bhatnagar");
+        students.add("Tina Chen");
+        students.add("Neal Chopra");
+        students.add("Marty Freeland");
+        students.add("Kate Garlinghouse");
+        students.add("Anneka Goel");   
+        students.add("Yana Gulati");
+        students.add("Vishnu Kagolanu");
+        students.add("Nick Karros");
+        students.add("Ethan Liu");
+        students.add("Christina Long");
+        students.add("Tynan Macaluso");
+        students.add("Trent Melinauskas");
+        students.add("Lily Pelham Burn");
+        students.add("Thalia Stavropoulos");
+        students.add("William Swart");
+        students.add("Roshan Taneja");
+        students.add("Naomi Watson");
+        students.add("William Yen");
     }
 }

@@ -21,8 +21,11 @@ public class ArrayListOfStudents extends ConsoleProgram
 
         for (int i=0; i<students.size(); i++)
         {
-            println(students.get(i));
+            if (students.get(i).toLowerCase().indexOf("e") >= -1) {
+                println(students.get(i));
+            }
         }
+        
         
     }
 

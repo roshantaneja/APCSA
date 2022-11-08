@@ -15,7 +15,7 @@ public class Josephus extends ConsoleProgram
         int index = 0;
         while (students.size() > 1)
         {
-
+            
         }
     }
 
