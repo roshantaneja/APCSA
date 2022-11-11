@@ -1,4 +1,3 @@
-
 public class Card
 {
     private int rank;
@@ -20,7 +19,6 @@ public class Card
             return "diamonds";
         else
             return "clubs";
-
     }
     
     public String getRank()

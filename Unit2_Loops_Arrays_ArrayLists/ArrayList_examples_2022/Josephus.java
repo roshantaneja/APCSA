@@ -3,7 +3,8 @@ import acm.program.*;
 
 public class Josephus extends ConsoleProgram
 {
-
+    
+    
     public void run()
     {
         ArrayList<String> students = new ArrayList<String>();
@@ -15,9 +16,19 @@ public class Josephus extends ConsoleProgram
         int index = 0;
         while (students.size() > 1)
         {
+            int len = students.get(index).length();
             
+            println(students.get(index) + " has length " + len + ".");
+            println("lets remove the student " + len + " spaces after " + students.get(index));
+            println("Goodbye, " + students.get((index + len) % students.size()) + " You were removed.");
+            println();
+            students.remove((index + len) % students.size());
+            index = (index + len) % students.size();
         }
+        
+        println(students.get(0) + "is the winner!");
     }
+    
 
     public void initializeStudents(ArrayList<String> students)
     {
@@ -43,5 +54,4 @@ public class Josephus extends ConsoleProgram
         students.add("Naomi Watson");
         students.add("William Yen");
     }
-
 }
