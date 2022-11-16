@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Practice
+comment1.params=words
+comment1.target=boolean\ containsNoWordsShorterThanFiveLetters(java.lang.String[])
+comment2.params=words
+comment2.target=void\ removeAllCatWords(java.util.ArrayList)
+comment3.params=nums
+comment3.target=int\ countAdjacentMultiplesOfTen(java.util.ArrayList)
+comment4.params=nums
+comment4.target=boolean\ sameNumberOfFiveAndSevenFactors(int[])
+comment5.params=words
+comment5.target=boolean\ hasWordBetween5and10LettersLong(java.lang.String[])
+comment6.params=words
+comment6.target=boolean\ containsKwordAndMword(java.util.ArrayList)
+comment7.params=nums
+comment7.target=int\ biggestEvenNumber(int[])
+comment8.params=words
+comment8.target=java.util.ArrayList\ getAllWordsSameLengthAsFirstWord(java.lang.String[])
+numComments=9
