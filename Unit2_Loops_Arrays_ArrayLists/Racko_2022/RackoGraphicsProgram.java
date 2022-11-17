@@ -25,9 +25,10 @@ public class RackoGraphicsProgram extends GraphicsProgram
     private int gameState;  // will be one of four constants above
     private JLabel status;  // use status.setText to provide updates of status of game
     private int replacementCardValue;  // the card drawn from either the discard pile or deck
+    private GLabel deck;
+    private GImage card;
 
-    public void run()
-    {
+    public void run() {
         initWindow();
         initVariables();
         drawGraphics();
@@ -51,7 +52,31 @@ public class RackoGraphicsProgram extends GraphicsProgram
 
     public void drawGraphics()
     {
-       // version 0.5
+       drawStack();
+       drawDeck();
+    }
+    
+    public void drawStack(){
+        int[] hand = game.getPlayerHand();
+        for (int i = 0; i < hand.length;i++){
+            GImage tempCard = getCardForValue(hand[i]);
+            tempCard.setLocation(WINDOWSIZE-OFFSET-120, OFFSET + (CARDHEIGHT + 5) * i);
+            add(tempCard);
+        }
+    }
+
+    public void drawDeck(){
+        deck = new GLabel("Deck", OFFSET, 80);
+        deck.setFont("Times-Bold-24");
+        deck.setColor(Color.red);
+        add(deck);
+    }
+
+    public void drawDiscard(){
+        int value = game.peekAtTopCardFromDiscardPile();
+        card = getCardForValue(value);
+        card.setLocation(OFFSET, 160);
+        add(card);
     }
 
     public void mouseClicked(MouseEvent event)
