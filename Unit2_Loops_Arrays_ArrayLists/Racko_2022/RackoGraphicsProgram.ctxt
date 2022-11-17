@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=RackoGraphicsProgram
+comment1.params=
+comment1.target=void\ run()
+comment2.params=
+comment2.target=void\ initVariables()
+comment3.params=
+comment3.target=void\ initWindow()
+comment4.params=
+comment4.target=void\ drawGraphics()
+comment5.params=event
+comment5.target=void\ mouseClicked(java.awt.event.MouseEvent)
+comment6.params=
+comment6.target=void\ makeComputerMove()
+comment7.params=cardValue
+comment7.target=acm.graphics.GImage\ getCardForValue(int)
+comment8.params=card
+comment8.target=int\ getValueForCard(acm.graphics.GCompound)
+numComments=9

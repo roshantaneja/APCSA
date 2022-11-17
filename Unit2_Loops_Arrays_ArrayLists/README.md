@@ -2,7 +2,7 @@
 
 ### How do I declare an array?
 
-`int[] nums = new int[10;`
+`int[] nums = new int[10];`
 
 ### How do I declare an ArrayList?
 
