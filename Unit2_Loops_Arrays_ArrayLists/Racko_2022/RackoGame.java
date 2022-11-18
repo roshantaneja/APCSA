@@ -87,7 +87,7 @@ public class RackoGame
     }
 
     public void createDeck(ArrayList<Integer> deck, int deckSize) {
-        for (int i = 0; i < deckSize + 1; i++) {
+        for (int i = 1; i < deckSize + 1; i++) {
             deck.add(i);
         }
         shuffleDeck();
