@@ -90,7 +90,7 @@ public class RackoGraphicsProgram extends GraphicsProgram
 
     public void drawDeck()
     {
-        deckLabel = new GLabel("deck",10, 100);
+        deckLabel = new GLabel("Deck",10, 100);
         deckLabel.setFont("Times-Bold-24");
         deckLabel.setColor(Color.RED);
         add(deckLabel);
@@ -192,12 +192,12 @@ public class RackoGraphicsProgram extends GraphicsProgram
             gameOverMessage.setColor(Color.GREEN);
 
         } else {
-            gameOverMessage = new GLabel("Sorry, you lost...");
+            gameOverMessage = new GLabel("Sorry bro, you lost...");
             gameOverMessage.setColor(Color.RED);
         }
 
         gameOverMessage.setFont("*-*-24"); 
-        gameOverMessage.setLocation(WINDOWSIZE/2-gameOverMessage.getWidth()/2, WINDOWSIZE/2 - gameOverMessage.getHeight()/2);
+        gameOverMessage.setLocation(WINDOWSIZE/2-gameOverMessage.getWidth()/2 - 50, WINDOWSIZE/2 - gameOverMessage.getHeight()/2 - 40);
         add(gameOverMessage);
     }
 
