@@ -1,12 +1,12 @@
 #BlueJ class context
 comment0.target=GameOfLifeFrame
-comment0.text=\nThis\ frame\ contains\ a\ panel\ that\ displays\ a\ GameOfLife\nand\ a\ panel\ of\ text\ fields\ to\ specify\ the\ rectangle\ position.\n
+comment0.text=\r\nThis\ frame\ contains\ a\ panel\ that\ displays\ a\ GameOfLife\r\nand\ a\ panel\ of\ text\ fields\ to\ specify\ the\ rectangle\ position.\r\n
 comment1.params=
 comment1.target=GameOfLifeFrame()
-comment1.text=\n\ \ \ \ Constructs\ the\ frame.\n
+comment1.text=\r\n\ \ \ \ Constructs\ the\ frame.\r\n
 comment2.params=numTurns
 comment2.target=void\ playTheGame(int)
-comment2.text=\n\ \ \ \ Creates\ the\ control\ panel\ with\ the\ text\ fields\n\ \ \ \ at\ the\ bottom\ of\ the\ frame.\n
+comment2.text=\r\n\ \ \ \ Creates\ the\ control\ panel\ with\ the\ text\ fields\r\n\ \ \ \ at\ the\ bottom\ of\ the\ frame.\r\n
 comment3.params=
 comment3.target=void\ createControlPanel()
 comment4.params=
