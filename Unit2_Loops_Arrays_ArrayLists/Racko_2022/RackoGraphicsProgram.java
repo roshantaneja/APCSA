@@ -184,6 +184,7 @@ public class RackoGraphicsProgram extends GraphicsProgram
     }
 
     public void gameOver(boolean hasWon){
+        removeAll();
         gameState = GAME_OVER;
         GLabel gameOverMessage;
 
@@ -195,10 +196,26 @@ public class RackoGraphicsProgram extends GraphicsProgram
             gameOverMessage = new GLabel("Sorry bro, you lost...");
             gameOverMessage.setColor(Color.RED);
         }
-
+        
+        
+        GLabel computerHandLabel = new GLabel("Heres the Computer Hand", 30, 100);
+        add(computerHandLabel);
+        
+        showComputerHand();
+        
         gameOverMessage.setFont("*-*-24"); 
         gameOverMessage.setLocation(WINDOWSIZE/2-gameOverMessage.getWidth()/2 - 50, WINDOWSIZE/2 - gameOverMessage.getHeight()/2 - 40);
         add(gameOverMessage);
+    }
+    
+    private void showComputerHand(){
+        int[] hand = game.getComputerHand();
+        for(int i=0; i<hand.length; i++){
+            int value = hand[i];
+            GImage card = getCardForValue(value);
+            card.setLocation(WINDOWSIZE-OFFSET-100, OFFSET + (CARDHEIGHT + 5) * i);
+            add(card);
+        }
     }
 
     // helper methods I wrote for you
