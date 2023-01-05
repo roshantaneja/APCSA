@@ -36,15 +36,39 @@ public class GameOfLifePanel extends JPanel
         // The gameGrid private instance variable should be initialized to
         // be random boolean values in a two dimensional array NUM_ROWS by 
         // NUM_COLS.
-
+        
+        gameGrid = new boolean[NUM_ROWS][NUM_COLS];
+        
+        for (int r = 0; r < gameGrid.length; r++){
+            for (int c = 0; c < gameGrid[0].length; c++){
+                gameGrid[r][c] = false;//Math.random() > 0.5;
+            }
+        }
+        
     }
 
     // #1 - You'll need to complete this method.  It should return the number
     // of true neighbors around location gameGrid[r][c]. 
     private int numNeighbors(int r, int c)
     {
-        return 0;
-        // just to get it to compile
+        int total = 0;
+        if (r != 0 && gameGrid[r-1][c])
+            total ++;
+        if (r !=  NUM_ROWS - 1 && gameGrid[r+1][c])
+            total ++;
+        if (c != 0 && gameGrid[r][c-1])
+            total++;
+        if (c !=  NUM_COLS - 1 && gameGrid[r][c+1])
+            total++;
+        if (r != 0 && c != 0 && gameGrid[r-1][c-1])
+            total++;
+        if (r != 0 && c != NUM_COLS - 1 && gameGrid[r-1][c+1])
+            total++;
+        if (r != NUM_ROWS - 1 && c != 0 && gameGrid[r+1][c-1])
+            total++;
+        if (r != NUM_ROWS - 1 && c != NUM_COLS - 1 && gameGrid[r+1][c+1])
+            total++;
+        return total;
     }
 
     // #2 - You'll need to complete this method.  This should play one "turn" or
@@ -57,8 +81,21 @@ public class GameOfLifePanel extends JPanel
     // * alive cells die due to overcrowding when they have 4 or more alive neighbors
     // * dead cells come to life when they have exact three alive neighbors
     public void playOneTurn()
-    {         
-       
+    {
+        boolean[][] nextGeneration = new boolean[NUM_ROWS][NUM_COLS];
+        for (int r = 0; r < gameGrid.length; r++){
+            for (int c = 0; c < gameGrid[0].length; c++){
+                int n = numNeighbors(r, c);
+                if (gameGrid[r][c] && (n == 2 || n == 3)){
+                    nextGeneration[r][c] = true;
+                } else if (!gameGrid[r][c] && n == 3){
+                    nextGeneration[r][c] = true;
+                } else {
+                    nextGeneration[r][c] = false;
+                }
+            }
+        }
+        gameGrid = nextGeneration;
         // leave the line below as the last line
         repaint();
     }
