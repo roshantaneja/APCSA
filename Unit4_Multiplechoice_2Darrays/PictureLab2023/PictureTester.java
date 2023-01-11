@@ -10,7 +10,7 @@ public class PictureTester
 {
     public static void main(String[] args)
     {
-        Picture picture = new Picture("images/" + "koala.jpg");
-        picture.show();
+        Picture picture = new Picture("images/" + "baby2.jpg");
+        picture.explore();
     }
 }

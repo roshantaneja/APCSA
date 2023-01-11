@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=ParticlesProgram
+comment1.params=
+comment1.target=void\ init()
+comment2.params=numRows\ numCols
+comment2.target=void\ initVariables(int,\ int)
+comment3.params=row\ col\ particleType
+comment3.target=void\ locationClicked(int,\ int,\ int)
+comment4.params=
+comment4.target=void\ step()
+comment5.params=
+comment5.target=void\ updateDisplay()
+comment6.params=
+comment6.target=void\ run()
+numComments=7

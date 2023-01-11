@@ -1,8 +1,9 @@
 #BlueJ class context
-comment0.params=rows\ cols
-comment0.target=ConnectFourGame(int,\ int)
-comment1.params=
-comment1.target=int\ getWinner()
-comment2.params=col
-comment2.target=int\ dropChecker(int)
-numComments=3
+comment0.target=ConnectFourGame
+comment1.params=rows\ cols
+comment1.target=ConnectFourGame(int,\ int)
+comment2.params=
+comment2.target=int\ getWinner()
+comment3.params=col
+comment3.target=int\ dropChecker(int)
+numComments=4
