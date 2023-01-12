@@ -5,7 +5,7 @@ public class Lava extends Particle
     int age;
     public Lava()
     {
-        super(ParticlesProgram.LAVA, new Color((int)(Math.random() * 50) + 200, (int)(Math.random() * 20), (int)(Math.random() * 20)));
+        super(ParticlesProgram.LAVA, new Color((int)(Math.random() * 50) + 200, (int)(Math.random() * 20) + 50, (int)(Math.random() * 20) + 50));
         age = 0;
         // new Color((int)(Math.random() * 50) + 200, (int)(Math.random() * 20), (int)(Math.random() * 20))
     }
