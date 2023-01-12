@@ -98,7 +98,7 @@ public class ParticlesProgram extends Program
     public void waterBehaviour(int row, int col){
         int direction = (int)(Math.random() * 10);
         if (direction <= 7) {
-            tryToMoveDown(row, col, false);
+            tryToMoveDown(row, col, true);
         } else if (direction == 8) {
             tryToMoveLeft(row, col);
         } else {
@@ -107,21 +107,21 @@ public class ParticlesProgram extends Program
     }
     
     public void tryToMoveDown(int row, int col, boolean canFallThroughWater){
-        if (row != grid.length - 1 && (grid[row+1][col].getType() == EMPTY || 
-            canFallThroughWater && grid[row+1][col].getType() == WATER)){
+        if (row != grid.length - 1 && (grid[row + 1][col].getType() == EMPTY || 
+            canFallThroughWater && grid[row + 1][col].getType() == WATER)){
             Particle save = grid[row][col];
-            grid[row][col] = grid[row+1][col];
-            grid[row+1][col] = save;
+            grid[row][col] = grid[row + 1][col];
+            grid[row + 1][col] = save;
         } else if (row != grid.length - 1 && col != grid[0].length - 1 && (grid[row+1][col + 1].getType() == EMPTY || 
-            canFallThroughWater && grid[row+1][col + 1].getType() == WATER)) {
+            canFallThroughWater && grid[row + 1][col + 1].getType() == WATER)) {
             Particle save = grid[row][col];
-            grid[row][col] = grid[row+1][col+1];
-            grid[row+1][col+1] = save;    
+            grid[row][col] = grid[row + 1][col + 1];
+            grid[row + 1][col + 1] = save;    
         } else if (row != grid.length - 1 && col != 0 && (grid[row+1][col - 1].getType() == EMPTY || 
-            canFallThroughWater && grid[row+1][col + 1].getType() == WATER)) {
+            canFallThroughWater && grid[row + 1][col - 1].getType() == WATER)) {
             Particle save = grid[row][col];
-            grid[row][col] = grid[row+1][col-1];
-            grid[row+1][col-1] = save;    
+            grid[row][col] = grid[row + 1][col - 1];
+            grid[row + 1][col - 1] = save;    
         }
     }
     
