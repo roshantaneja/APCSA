@@ -10,6 +10,9 @@ public class ParticlesProgram extends Program
     public static final int SAND = 2;
     public static final int WATER = 3;
     public static final int ICE = 4;
+    public static final int LAVA = 5;
+    
+    public static final int ROCK = 1000;
     
 
     //do not add any more private instance variables
@@ -24,12 +27,13 @@ public class ParticlesProgram extends Program
     public void initVariables(int numRows, int numCols)
     {
         String[] names;
-        names = new String[5];
+        names = new String[6];
         names[EMPTY] = "Empty";
         names[METAL] = "Metal";
         names[SAND] = "Sand";
         names[WATER] = "Water";
         names[ICE] = "Ice";
+        names[LAVA] = "Lava";
         
         display = new ParticlesDisplay("Particles Game", 
                                         numRows, numCols, names);
@@ -57,7 +61,8 @@ public class ParticlesProgram extends Program
             grid[row][col] = new Water();
         else if (particleType == ICE)
             grid[row][col] = new Ice();
-        
+        else if (particleType == LAVA)
+            grid[row][col] = new Lava();        
     }
 
     //called repeatedly.
@@ -79,6 +84,13 @@ public class ParticlesProgram extends Program
             ice.increment();
             if (ice.hasMelted()){
                 grid[row][col] = new Water();
+            }
+        } else if (particle.getType() == LAVA) {
+            Lava lava = (Lava)(particle);
+            lava.increment();
+            waterBehaviour(row, col);
+            if (lava.hasHardened()){
+                grid[row][col] = new Rock();
             }
         }
     }
