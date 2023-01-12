@@ -37,7 +37,7 @@ public class ParticlesProgram extends Program
         if (particleType == EMPTY)
             grid[row][col] = new Empty();
         else if (particleType == METAL)
-            grid[row][col] = new Metal();          
+            grid[row][col] = new Metal();
         
     }
 
