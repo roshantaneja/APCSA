@@ -14,6 +14,7 @@ public class ParticlesProgram extends Program
     public static final int CONWAY = 6;
     
     public static final int ROCK = 1000;
+    public static final int STEAM = 1001;
     
 
     //do not add any more private instance variables
@@ -77,18 +78,45 @@ public class ParticlesProgram extends Program
         int col = (int)(Math.random() * grid[0].length);
         Particle particle = grid[row][col];
         //step methods per particle
-        if (particle.getType() == EMPTY || particle.getType() == METAL){
+        if (particle.getType() == EMPTY){
+            return;
+        } else if (particle.getType() == METAL){
+            if (numNeighbors(row, col, LAVA) > 3){
+                grid[row][col] = new Lava();
+            }
             return;
         } else if (particle.getType() == SAND) {
             tryToMoveDown(row, col, true);
+            return;
         } else if (particle.getType() == WATER) {
+            if (numNeighbors(row, col, LAVA) > 3){
+                grid[row][col] = new Steam();
+            }
             waterBehaviour(row, col);
+        } else if (particle.getType() == STEAM){
+            int direction = (int)(Math.random() * 10);
+            if (direction > 5 && direction < 7){
+                tryToMoveUp(row, col, true);
+            } else if (direction == 8){
+                tryToMoveLeft(row, col);
+            } else if (direction == 9) {
+                tryToMoveRight(row, col);
+            }
+            Steam steam = (Steam)(particle);
+            if (row == 0) {
+                steam.increment();
+            }
+            if (steam.hasCondensed()){
+                grid[row][col] = new Water();
+            }
+            return;
         } else if (particle.getType() == ICE) {
             Ice ice = (Ice)(particle);
             ice.increment();
             if (ice.hasMelted()){
                 grid[row][col] = new Water();
             }
+            return;
         } else if (particle.getType() == LAVA) {
             Lava lava = (Lava)(particle);
             lava.increment();
@@ -96,8 +124,10 @@ public class ParticlesProgram extends Program
             if (lava.hasHardened()){
                 grid[row][col] = new Rock();
             }
+            return;
         } else if (particle.getType() == CONWAY) {
             conwayBehaviour();
+            return;
         }
     }
     
@@ -130,38 +160,57 @@ public class ParticlesProgram extends Program
     private int numNeighbors(int r, int c, int type)
     {
         int total = 0;
-        if (r != 0 && grid[r-1][c].getType() == type)
+        if (r != 0 && grid[r-1][c].getType() == type) // top
             total ++;
-        if (r !=  grid.length - 1 && grid[r+1][c].getType() == type)
+        if (r !=  grid.length - 1 && grid[r+1][c].getType() == type) // bottom
             total ++;
-        if (c != 0 && grid[r][c-1].getType() == type)
+        if (c != 0 && grid[r][c-1].getType() == type) // left
             total++;
-        if (c !=  grid[0].length - 1 && grid[r][c+1].getType() == type)
+        if (c !=  grid[0].length - 1 && grid[r][c+1].getType() == type) // right
             total++;
-        if (r != 0 && c != 0 && grid[r-1][c-1].getType() == type)
+        if (r != 0 && c != 0 && grid[r-1][c-1].getType() == type) // top left
             total++;
-        if (r != 0 && c != grid[0].length - 1 && grid[r-1][c+1].getType() == type)
+        if (r != 0 && c != grid[0].length - 1 && grid[r-1][c+1].getType() == type) // top right
             total++;
-        if (r != grid.length - 1 && c != 0 && grid[r+1][c-1].getType() == type)
+        if (r != grid.length - 1 && c != 0 && grid[r+1][c-1].getType() == type) // bottom left
             total++;
-        if (r != grid.length - 1 && c != grid[0].length - 1 && grid[r+1][c+1].getType() == type)
+        if (r != grid.length - 1 && c != grid[0].length - 1 && grid[r+1][c+1].getType() == type) // bottom right
             total++;
         return total;
     }
-    
+
+    public void tryToMoveUp(int row, int col, boolean canFallThroughWater){
+        if (row != 0 && (grid[row - 1][col].getType() == EMPTY ||
+                canFallThroughWater && grid[row - 1][col].getType() == WATER || grid[row - 1][col].getType() == STEAM)) {
+            Particle save = grid[row][col];
+            grid[row][col] = grid[row - 1][col];
+            grid[row - 1][col] = save;
+        } else if (row != 0 && col != 0 && (grid[row - 1][col - 1].getType() == EMPTY ||
+                canFallThroughWater && grid[row - 1][col - 1].getType() == WATER || grid[row - 1][col - 1].getType() == STEAM)){
+            Particle save = grid[row][col];
+            grid[row][col] = grid[row - 1][col - 1];
+            grid[row - 1][col - 1] = save;
+        } else if (row != 0 && col != grid[0].length - 1 && (grid[row - 1][col + 1].getType() == EMPTY ||
+                canFallThroughWater && grid[row - 1][col + 1].getType() == WATER || grid[row - 1][col + 1].getType() == STEAM)){
+            Particle save = grid[row][col];
+            grid[row][col] = grid[row - 1][col + 1];
+            grid[row - 1][col + 1] = save;
+        }
+    }
+
     public void tryToMoveDown(int row, int col, boolean canFallThroughWater){
-        if (row != grid.length - 1 && (grid[row + 1][col].getType() == EMPTY || 
-            canFallThroughWater && grid[row + 1][col].getType() == WATER)){
+        if (row != grid.length - 1 && (grid[row + 1][col].getType() == EMPTY ||
+                canFallThroughWater && grid[row + 1][col].getType() == WATER || grid[row + 1][col].getType() == STEAM)){
             Particle save = grid[row][col];
             grid[row][col] = grid[row + 1][col];
             grid[row + 1][col] = save;
-        } else if (row != grid.length - 1 && col != grid[0].length - 1 && (grid[row+1][col + 1].getType() == EMPTY || 
-            canFallThroughWater && grid[row + 1][col + 1].getType() == WATER)) {
+        } else if (row != grid.length - 1 && col != grid[0].length - 1 && (grid[row+1][col + 1].getType() == EMPTY ||
+                canFallThroughWater && grid[row + 1][col + 1].getType() == WATER || grid[row + 1][col + 1].getType() == STEAM)) {
             Particle save = grid[row][col];
             grid[row][col] = grid[row + 1][col + 1];
             grid[row + 1][col + 1] = save;    
-        } else if (row != grid.length - 1 && col != 0 && (grid[row+1][col - 1].getType() == EMPTY || 
-            canFallThroughWater && grid[row + 1][col - 1].getType() == WATER)) {
+        } else if (row != grid.length - 1 && col != 0 && (grid[row+1][col - 1].getType() == EMPTY ||
+                canFallThroughWater && grid[row + 1][col - 1].getType() == WATER || grid[row + 1][col - 1].getType() == STEAM)) {
             Particle save = grid[row][col];
             grid[row][col] = grid[row + 1][col - 1];
             grid[row + 1][col - 1] = save;    
