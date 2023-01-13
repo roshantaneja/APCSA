@@ -11,6 +11,7 @@ public class ParticlesProgram extends Program
     public static final int WATER = 3;
     public static final int ICE = 4;
     public static final int LAVA = 5;
+    public static final int CONWAY = 6;
     
     public static final int ROCK = 1000;
     
@@ -27,13 +28,14 @@ public class ParticlesProgram extends Program
     public void initVariables(int numRows, int numCols)
     {
         String[] names;
-        names = new String[6];
+        names = new String[7];
         names[EMPTY] = "Empty";
         names[METAL] = "Metal";
         names[SAND] = "Sand";
         names[WATER] = "Water";
         names[ICE] = "Ice";
         names[LAVA] = "Lava";
+        names[CONWAY] = "Conway's Game of Life";
         
         display = new ParticlesDisplay("Particles Game", 
                                         numRows, numCols, names);
@@ -62,7 +64,9 @@ public class ParticlesProgram extends Program
         else if (particleType == ICE)
             grid[row][col] = new Ice();
         else if (particleType == LAVA)
-            grid[row][col] = new Lava();        
+            grid[row][col] = new Lava();
+        else if (particleType == CONWAY)
+            grid[row][col] = new Conway();
     }
 
     //called repeatedly.
@@ -92,6 +96,8 @@ public class ParticlesProgram extends Program
             if (lava.hasHardened()){
                 grid[row][col] = new Rock();
             }
+        } else if (particle.getType() == CONWAY) {
+            conwayBehaviour();
         }
     }
     
@@ -104,6 +110,43 @@ public class ParticlesProgram extends Program
         } else {
             tryToMoveRight(row, col);
         }
+    }
+    
+    public void conwayBehaviour(){
+        for (int row = 0; row < grid.length; row ++){
+            for (int col = 0; col < grid[0].length; col ++){
+                int n = numNeighbors(row, col, CONWAY);
+                if (grid[row][col].getType() == CONWAY && (n == 2 || n == 3)){
+                    grid[row][col] = new Conway();
+                } else if (grid[row][col].getType() != CONWAY && n == 3){
+                    grid[row][col] = new Conway();
+                } else if (grid[row][col].getType() == CONWAY && (n < 2 || n > 3)){
+                    grid[row][col] = new Empty();
+                } 
+            }
+        }
+    }
+
+    private int numNeighbors(int r, int c, int type)
+    {
+        int total = 0;
+        if (r != 0 && grid[r-1][c].getType() == type)
+            total ++;
+        if (r !=  grid.length - 1 && grid[r+1][c].getType() == type)
+            total ++;
+        if (c != 0 && grid[r][c-1].getType() == type)
+            total++;
+        if (c !=  grid[0].length - 1 && grid[r][c+1].getType() == type)
+            total++;
+        if (r != 0 && c != 0 && grid[r-1][c-1].getType() == type)
+            total++;
+        if (r != 0 && c != grid[0].length - 1 && grid[r-1][c+1].getType() == type)
+            total++;
+        if (r != grid.length - 1 && c != 0 && grid[r+1][c-1].getType() == type)
+            total++;
+        if (r != grid.length - 1 && c != grid[0].length - 1 && grid[r+1][c+1].getType() == type)
+            total++;
+        return total;
     }
     
     public void tryToMoveDown(int row, int col, boolean canFallThroughWater){

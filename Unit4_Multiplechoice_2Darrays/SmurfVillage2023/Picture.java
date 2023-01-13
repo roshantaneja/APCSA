@@ -94,7 +94,21 @@ public class Picture extends SimplePicture
             pixel.setBlue(0);
         }
 
-    }  
+    }
+    
+    public void insert(Picture smallPic, int row, int col){
+        Pixel[][] bigPixels = getPixels2D();
+        Pixel[][] smallPixels = smallPic.getPixels2D();
+        for (int r = 0; r < smallPixels.length; r ++){
+            for (int c = 0; c < smallPixels[0].length; c ++){
+                if (row + r < bigPixels.length && col + c < bigPixels[0].length && row + r > 0 && col + c > 0){
+                    if (smallPixels[r][c].colorDistance(Color.green) > 120){
+                        bigPixels[r + row][c + col].setColor(smallPixels[r][c].getColor());
+                    }
+                }
+            }
+        }
+    }
     
     
 
