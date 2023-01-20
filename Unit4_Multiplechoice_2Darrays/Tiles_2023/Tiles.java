@@ -18,6 +18,7 @@ public class Tiles extends GraphicsProgram
     public void run()
     {
         setSize(TILE_SIZE*NUM_COLS, TILE_SIZE*NUM_ROWS+24);
+        tiles = new GRect[NUM_ROWS][NUM_COLS];
         status = -1;
         initializeTiles();
         status = playGame(); 
@@ -36,9 +37,9 @@ public class Tiles extends GraphicsProgram
 
     private void initializeTiles()
     {
-        for (int r=0; r<tiles.length; r++)
+        for (int r=0; r<NUM_ROWS; r++)
         {
-            for (int c=0; c<tiles[0].length; c++)
+            for (int c=0; c<NUM_COLS; c++)
             {
                 tiles[r][c] = new GRect(c*TILE_SIZE, r*TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 tiles[r][c].setFilled(true);
@@ -65,17 +66,28 @@ public class Tiles extends GraphicsProgram
 
     private boolean allSameColor() 
     {
-        GRect startTile = tiles[0][0];
+        Color startColor = tiles[0][0].getColor();
         for (int r=0; r<tiles.length; r++)
             for (int c=0; c<tiles[0].length; c++)
-                if (!tiles[r][c].equals(startTile))
+                if (!tiles[r][c].getColor().equals(startColor))
                     return false;
         return true;
     }
 
     private boolean checkerBoard() 
     {
-        return false; // we'll do this
+        for (int r=0; r<tiles.length; r++)
+            for (int c=0; c<tiles[0].length; c++)
+                if ((r+c) % 2 == 0){
+                    if (tiles[r][c].getColor() != Color.red){
+                        return false;
+                    }
+                } else {
+                    if (tiles[r][c].getColor() != Color.black){
+                        return false;
+                    }
+                }
+        return true;
     }
 
     private boolean ring() 
@@ -107,11 +119,11 @@ public class Tiles extends GraphicsProgram
         {
             if (row!=0)
                 toggleTileColor(tiles[row-1][col]);
-            if (row!=tiles.length)
+            if (row!=tiles.length-1)
                 toggleTileColor(tiles[row+1][col]);
             if (col!=0)
                 toggleTileColor(tiles[row][col-1]);
-            if (col!=tiles.length-1)
+            if (col!=tiles[0].length-1)
                 toggleTileColor(tiles[row][col+1]);
         }
 
