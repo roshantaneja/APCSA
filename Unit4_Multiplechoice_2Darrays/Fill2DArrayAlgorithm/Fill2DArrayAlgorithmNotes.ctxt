@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Fill2DArrayAlgorithmNotes
+comment1.params=rows\ cols
+comment1.target=int[][]\ getGridOfNumbersUsingCounterStartingAtOne(int,\ int)
+comment2.params=rows\ cols
+comment2.target=int[][]\ getGridOfNumbersUsingCounter(int,\ int)
+comment3.params=rows\ cols
+comment3.target=int[][]\ getGridOfNumbersUsingMath(int,\ int)
+comment4.params=rows\ cols
+comment4.target=int[][]\ getGridOfNumbersUsingMathColumnMajorOrder(int,\ int)
+comment5.params=rows\ cols\ words
+comment5.target=java.lang.String[][]\ getGridOfWordsUsingMath(int,\ int,\ java.lang.String[])
+comment6.params=rows\ cols\ words
+comment6.target=java.lang.String[][]\ getGridOfWordsUsingMathIfPresent(int,\ int,\ java.lang.String[])
+comment7.params=rows\ cols\ words
+comment7.target=java.lang.String[][]\ getGridOfWordsColumnMajorUsingMathIfPresent(int,\ int,\ java.lang.String[])
+numComments=8

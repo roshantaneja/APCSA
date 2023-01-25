@@ -89,12 +89,12 @@ public class ParticlesProgram extends Program
         //step methods per particle
         if (particle.getType() == EMPTY){
             return;
-        } else if (particle.getType() == METAL){
-            if (numNeighbors(row, col, LAVA) > 3){
+        } else if (particle.getType() == METAL){ // METAL BEHAVIOUR
+            if (numNeighbors(row, col, LAVA) > 3){ // if metal around too much lava, it turns into lava
                 grid[row][col] = new Lava();
             }
             return;
-        } else if (particle.getType() == SAND) {
+        } else if (particle.getType() == SAND) { // SAND BEHAVIOUR
             tryToMoveDown(row, col, true);
             return;
         } else if (particle.getType() == WATER) {
@@ -102,7 +102,7 @@ public class ParticlesProgram extends Program
                 grid[row][col] = new Steam();
             }
             waterBehaviour(row, col);
-        } else if (particle.getType() == STEAM){
+        } else if (particle.getType() == STEAM){ // STEAM BEHAVIOUR (WIP)
             int direction = (int)(Math.random() * 10);
             if (direction > 5 && direction < 7){
                 tryToMoveUp(row, col, true);
@@ -119,7 +119,7 @@ public class ParticlesProgram extends Program
                 grid[row][col] = new Water();
             }
             return;
-        } else if (particle.getType() == ICE) {
+        } else if (particle.getType() == ICE) { // ICE BEHAVIOUR
             Ice ice = (Ice)(particle);
             ice.increment();
             if (ice.hasMelted()){

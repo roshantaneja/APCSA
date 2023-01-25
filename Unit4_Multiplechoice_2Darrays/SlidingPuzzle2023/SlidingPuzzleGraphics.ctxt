@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=SlidingPuzzleGraphics
+comment1.params=
+comment1.target=void\ run()
+comment2.params=
+comment2.target=void\ drawGrid()
+comment3.params=
+comment3.target=void\ initializeLabels()
+comment4.params=
+comment4.target=void\ updateLabelValuesAndPositions()
+comment5.params=event
+comment5.target=void\ mouseClicked(java.awt.event.MouseEvent)
+numComments=6
