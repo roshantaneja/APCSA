@@ -29,14 +29,14 @@ public class ParticlesProgram extends Program
     public void initVariables(int numRows, int numCols)
     {
         String[] names;
-        names = new String[7];
+        names = new String[6];
         names[EMPTY] = "Empty";
         names[METAL] = "Metal";
         names[SAND] = "Sand";
         names[WATER] = "Water";
-        names[ICE] = "Ice";
+        names[ICE] = "Ice"; 
         names[LAVA] = "Lava";
-        names[CONWAY] = "Conway's Game of Life";
+        //names[CONWAY] = "Conway's Game of Life";
         
         display = new ParticlesDisplay("Particles Game", 
                                         numRows, numCols, names);
@@ -66,8 +66,17 @@ public class ParticlesProgram extends Program
             grid[row][col] = new Ice();
         else if (particleType == LAVA)
             grid[row][col] = new Lava();
-        else if (particleType == CONWAY)
+        else if (particleType == CONWAY){
+            grid[row-1][col-1] = new Conway();
+            grid[row-1][col] = new Conway();
+            grid[row-1][col+1] = new Conway();
+            grid[row][col-1] = new Conway();
             grid[row][col] = new Conway();
+            grid[row][col+1] = new Conway();
+            grid[row+1][col-1] = new Conway();
+            grid[row+1][col] = new Conway();
+            grid[row+1][col+1] = new Conway();
+        }
     }
 
     //called repeatedly.
@@ -88,9 +97,9 @@ public class ParticlesProgram extends Program
         } else if (particle.getType() == SAND) { // SAND BEHAVIOUR
             tryToMoveDown(row, col, true);
             return;
-        } else if (particle.getType() == WATER) { // WATER BEHAVIOUR
-            if (numNeighbors(row, col, LAVA) > 3){ // if water next to too much lava it turns into steam
-                grid[row][col] = new Steam(); 
+        } else if (particle.getType() == WATER) {
+            if (numNeighbors(row, col, LAVA) > 0){
+                grid[row][col] = new Steam();
             }
             waterBehaviour(row, col);
         } else if (particle.getType() == STEAM){ // STEAM BEHAVIOUR (WIP)
