@@ -96,6 +96,17 @@ public class Picture extends SimplePicture
 
     }
     
+    public void upsideDown(){
+        Pixel[][] pixels = getPixels2D();
+        for(int r = 0; r < pixels.length / 2; r++){
+            for (int c = 0; c < pixels[0].length; c++){
+                Color save = pixels[r][c].getColor();
+                pixels[r][c].setColor(pixels[pixels.length - 1 - r][c].getColor());
+                pixels[pixels.length - 1 - r][c].setColor(save);
+            }
+        }
+    }
+    
     public void insert(Picture smallPic, int row, int col){
         Pixel[][] bigPixels = getPixels2D();
         Pixel[][] smallPixels = smallPic.getPixels2D();
