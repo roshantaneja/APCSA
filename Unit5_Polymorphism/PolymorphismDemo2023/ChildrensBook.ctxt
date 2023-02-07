@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=ChildrensBook
+comment1.params=initialTitle\ howManyPages
+comment1.target=ChildrensBook(java.lang.String,\ int)
+comment2.params=
+comment2.target=java.lang.String\ getTitle()
+comment3.params=
+comment3.target=int\ getNumPages()
+comment4.params=
+comment4.target=double\ getWeight()
+comment5.params=
+comment5.target=int\ getRecommendedAge()
+numComments=6

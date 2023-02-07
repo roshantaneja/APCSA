@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=FavouriteQuestion
+comment1.params=
+comment1.target=FavouriteQuestion()
+comment2.params=
+comment2.target=java.lang.String\ getPrompt()
+comment3.params=
+comment3.target=java.lang.String\ getCorrectAnswer()
+comment4.params=response
+comment4.target=boolean\ isCorrect(java.lang.String)
+numComments=5

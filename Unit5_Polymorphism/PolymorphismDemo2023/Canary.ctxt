@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Canary
+comment1.params=
+comment1.target=Canary()
+comment2.params=
+comment2.target=boolean\ isInCoalMine()
+comment3.params=
+comment3.target=void\ chirp()
+numComments=4
