@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=SHPBug
+comment1.params=
+comment1.target=SHPBug()
+comment2.params=color
+comment2.target=void\ setColor(java.awt.Color)
+comment3.params=
+comment3.target=void\ act()
+numComments=4

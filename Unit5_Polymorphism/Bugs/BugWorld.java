@@ -10,6 +10,9 @@ public class BugWorld
         ActorWorld world = new ActorWorld();
         world.add(new Bug());
         world.add(new Rock());
+        world.add(new LeftBug());
+        world.add(new SHPBug());
+        world.add(new BoxBug(7));
         world.show();
     }
 }
