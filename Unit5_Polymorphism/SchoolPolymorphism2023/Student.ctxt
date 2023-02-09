@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Student
+comment1.params=initialName
+comment1.target=Student(java.lang.String)
+comment2.params=hours
+comment2.target=void\ doWork(double)
+comment3.params=
+comment3.target=boolean\ doesComplainAboutTests()
+numComments=4
