@@ -26,6 +26,24 @@ public class BoxBug extends Bug
             steps = 0;
         }
     }
-
     
+    public int getSteps(){
+        return steps;
+    }
+    
+    public void incrementSteps(){
+        steps++;
+    }
+    
+    public void resetSteps(){
+        steps = 0;
+    }
+    
+    public int getLength(){
+        return length;
+    }
+    
+    public void reduceLength(){
+        length -= 1;
+    }
 }

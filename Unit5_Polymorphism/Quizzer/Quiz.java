@@ -9,13 +9,15 @@ public class Quiz extends ConsoleProgram
         ArrayList<Question> questions = new ArrayList<Question>();
         double num = Math.random();
         for (int i = 0; i < 10; i++){
-            if (num < 1.0/3){
-                questions.add(new FavouriteQuestion());
-            } else if (num < 2.0/3) {
-                questions.add(new ArithmaticQuestion());
-            } else {
-                questions.add(new StateCapitalQuestion());
-            }
+            
+            questions.add(new MultipleChoiceQuestion());
+            //if (num < 1.0/3){
+                //questions.add(new FavouriteQuestion());
+            //} else if (num < 2.0/3) {
+                //questions.add(new ArithmaticQuestion());
+            //} else {
+                //questions.add(new StateCapitalQuestion());
+            //}
         }
         
         int score = 0;
