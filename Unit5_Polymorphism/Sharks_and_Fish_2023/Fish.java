@@ -19,6 +19,26 @@ public class Fish extends Critter
        age=0;
     }
     
+    public int getAge(){
+        return age;
+    }
+    
+    @Override
+    public void act(){
+        super.act();
+        age++;
+        if (age >= OLDAGE){
+            if (Math.random() <= PROBOFDYING){
+                removeSelfFromGrid();
+            }
+        }
+    }
+    
+    @Override
+    public void processActors(ArrayList<Actor> actors){
+        
+    }
+    
     // finish this up
     
 }

@@ -9,6 +9,7 @@ public class GridWorldProgram
     {
         ActorWorld world = new ActorWorld();
         world.add(new Bug());
+        world.add(new Rock());
         world.add(new ChameleonCritter());
         world.add(new Crab());
         world.show();

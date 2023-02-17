@@ -15,6 +15,20 @@ public class FemaleFish extends Fish
     {
         super();  // needed to call Fish constructor, which initializes age
         setColor(Color.PINK);
+        turnsPregnant = 0;
+    }
+    
+    @Override
+    public void processActors(ArrayList<Actor> actors){
+        if (turnsPregnant > 0) {
+            return;
+        }
+        for (Actor a : actors){
+            if (a instanceof MaleFish && getAge() >= BREEDAGE && turnsPregnant == 0){
+                turnsPregnant = 1;
+                setColor(Color.RED);
+            }
+        }
     }
     
     // finish this up
