@@ -2,4 +2,12 @@
 comment0.target=Shark
 comment1.params=
 comment1.target=Shark()
-numComments=2
+comment2.params=
+comment2.target=void\ act()
+comment3.params=actors
+comment3.target=void\ processActors(java.util.ArrayList)
+comment4.params=
+comment4.target=java.util.ArrayList\ getMoveLocations()
+comment5.params=loc
+comment5.target=void\ makeMove(info.gridworld.grid.Location)
+numComments=6
