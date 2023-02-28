@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=AsteroidsGame
+comment1.params=
+comment1.target=void\ initializeVariables()
+comment2.params=
+comment2.target=void\ makeAsteroids()
+comment3.params=
+comment3.target=void\ run()
+numComments=4
