@@ -1,4 +1,5 @@
 #BlueJ class context
-comment0.params=w\ h
-comment0.target=MediumAsteroid(int,\ int)
-numComments=1
+comment0.target=MediumAsteroid
+comment1.params=windowWidth\ windowHeight
+comment1.target=MediumAsteroid(int,\ int)
+numComments=2

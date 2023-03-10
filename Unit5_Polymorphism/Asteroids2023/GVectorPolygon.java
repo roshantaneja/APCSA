@@ -1,4 +1,10 @@
+import acm.program.*;
 import acm.graphics.*;
+import java.awt.Color;
+import java.awt.event.*;
+import java.util.*;
+import java.applet.AudioClip;
+import acm.util.MediaTools;
 
 public class GVectorPolygon extends GPolygon
 {
@@ -17,6 +23,7 @@ public class GVectorPolygon extends GPolygon
        theta = 0;
        maxX = windowWidth;
        maxY = windowHeight;
+       setColor(Color.white);
     }
 
     public void increaseVelocity(double numPixels)

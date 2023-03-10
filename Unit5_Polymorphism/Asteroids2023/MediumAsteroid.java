@@ -5,7 +5,8 @@ public class MediumAsteroid extends Asteroid
 
     public MediumAsteroid(int windowWidth, int windowHeight)
     {
-        // write this in version 0.2.1
+        super(windowWidth, windowHeight);
+        scale(0.2);
     }
 
 

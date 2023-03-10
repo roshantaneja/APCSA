@@ -10,14 +10,14 @@ import acm.util.MediaTools;
 public class AsteroidsGame extends GraphicsProgram
 {
     // uncomment out the line below in version 0.4.1
-    // private ArrayList<Asteroid> asteroids;
+    private ArrayList<Asteroid> asteroids;
     
     private boolean playing;
     
     private GLabel notificationLabel, scoreLabel;
     
     // uncomment out the line below in version 0.4.1
-    // private Ship ship;
+    private Ship ship;
     
     // uncomment out the line below in version 0.5.2
     // (and don't forget to write bullets = new ArrayList<Bullet>() in the initializeVariables method!)
@@ -53,32 +53,52 @@ public class AsteroidsGame extends GraphicsProgram
         add(scoreLabel);
         
         // uncomment out the line below in version 0.3
-        // asteroids = new ArrayList<Asteroid>();
-        // makeAsteroids();
+        asteroids = new ArrayList<Asteroid>();
+        makeAsteroids();
+        
+        ship = new Ship(getWidth(), getHeight());
+        ship.setLocation(getWidth()/2, getHeight()/2);
+        add(ship);
 
     }
 
     private void makeAsteroids()
     {
         // code for version 0.3.1 goes here
+        for (int i = 0; i < level+3; i ++){
+            Asteroid a = new Asteroid(getWidth(), getHeight());
+            a.setLocation(Math.random() * getWidth(), Math.random()*getHeight());
+            asteroids.add(a);
+        }
+        for (Asteroid a : asteroids){
+            a.increaseVelocity(1);
+            add(a);
+        }
     }
 
     public void run()
     {
         // code for version 0.1.1 goes here
-        GVectorPolygon shape = new GVectorPolygon(getWidth(), getHeight());
-        shape.addVertex(20, 30);
-        shape.addVertex(-10, 15);
-        shape.addVertex(45, -25);
-        shape.rotate(20);
-        shape.increaseVelocity(2.5);
-        shape.scale(2.5);
-        shape.recenter();
-        add(shape);. 
+        initializeVariables(); 
+        setBackground(Color.black);
+        
         while(true){
-            shape.updatePosition();
-            pause(10);
+            for (Asteroid a : asteroids){
+                a.updatePosition();
+                ship.updatePosition();
+                pause(5);
+            }
         }
+        
+    }
+    
+    public void keyPressed(KeyEvent e){
+        if (e.getKeyCode()==KeyEvent.VK_RIGHT)
+            ship.rotate(15); // rotate a bit clockwise
+        if (e.getKeyCode()==KeyEvent.VK_LEFT)
+            ship.rotate(-15);
+        if (e.getKeyCode()==KeyEvent.VK_UP)
+            ship.increaseVelocity(0.3);
     }
 
     // uncomment out the line below in version 0.6
