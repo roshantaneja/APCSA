@@ -1,8 +1,8 @@
 Unit #2 = "Odds & Ends" checklist
 - [x] for-each loop]
-- [ ] escape sequences: `\"`, `\\`, `\n`
-- [ ] List interface
-- [ ] final
+- [x] escape sequences: `\"`, `\\`, `\n`
+- [x] List interface
+- [x] final
 - [ ] ArrayList vs ArrayList<E>
 - [ ] counting in binary
 - [ ] public/private
