@@ -21,15 +21,14 @@ public class AsteroidsGame extends GraphicsProgram
     
     // uncomment out the line below in version 0.5.2
     // (and don't forget to write bullets = new ArrayList<Bullet>() in the initializeVariables method!)
-    // private ArrayList<Bullet> bullets; 
+    private ArrayList<Bullet> bullets; 
     
     private int level;
     private int numLivesRemaining;
     private int score;
     private AudioClip thrustClip, fireClip, bigBangClip, mediumBangClip, smallBangClip;
 
-    public void initializeVariables()
-    {
+    public void initializeVariables() {
         thrustClip = MediaTools.loadAudioClip("thrust.wav");   
         fireClip = MediaTools.loadAudioClip("fire.wav");   
         bigBangClip = MediaTools.loadAudioClip("bangLarge.wav");   
@@ -56,14 +55,15 @@ public class AsteroidsGame extends GraphicsProgram
         asteroids = new ArrayList<Asteroid>();
         makeAsteroids();
         
+        bullets = new ArrayList<Bullet>();
+        
         ship = new Ship(getWidth(), getHeight());
         ship.setLocation(getWidth()/2, getHeight()/2);
         add(ship);
 
     }
 
-    private void makeAsteroids()
-    {
+    private void makeAsteroids() {
         // code for version 0.3.1 goes here
         for (int i = 0; i < level+3; i ++){
             Asteroid a = new Asteroid(getWidth(), getHeight());
@@ -76,37 +76,62 @@ public class AsteroidsGame extends GraphicsProgram
         }
     }
 
-    public void run()
-    {
+    public void run() {
         // code for version 0.1.1 goes here
-        initializeVariables(); 
+        initializeVariables();
         setBackground(Color.black);
-        
-        while(true){
-            for (Asteroid a : asteroids){
-                a.updatePosition();
-                ship.updatePosition();
-                pause(5);
+
+        while (true) {
+            animationLoop();
+        }
+
+    }
+
+    public void animationLoop() {
+        for (Asteroid a : asteroids) { // iterate though asteroids
+            a.updatePosition();
+        }
+        for (int i = 0; i < bullets.size(); i++) { //need to remove bullets
+            Bullet b = bullets.get(i);
+            if (b.stillMoving()) {
+                b.updatePosition();
+            } else {
+                remove(bullets.get(i));
+                bullets.remove(i);
+                i--;
             }
         }
-        
+        if (checkForCollisions(ship) != null) {
+            numLivesRemaining--;
+            if (numLivesRemaining == 0) {
+                gameOver();
+            } else {
+                remove(ship);
+                ship = new Ship(getWidth(), getHeight());
+                ship.setLocation(getWidth()/2, getHeight()/2);
+                add(ship);
+            }
+        }
+        ship.updatePosition();
+        pause(5);
     }
-    
+
     public void keyPressed(KeyEvent e){
         if (e.getKeyCode()==KeyEvent.VK_RIGHT)
-            ship.rotate(15); // rotate a bit clockwise
+            ship.rotate(-15); // rotate a bit clockwise
         if (e.getKeyCode()==KeyEvent.VK_LEFT)
-            ship.rotate(-15);
+            ship.rotate(15);
         if (e.getKeyCode()==KeyEvent.VK_UP)
             ship.increaseVelocity(0.3);
         if (e.getKeyCode()==KeyEvent.VK_SPACE){
-            Bullet b = ship.makeBullet();
+            Bullet b = ship.makeBullet(getWidth(), getHeight());
+            b.increaseVelocity(3);
             add(b);
+            bullets.add(b);
         }
     }
 
-    // uncomment out the line below in version 0.6
-    /*
+    
     private Asteroid checkForCollisions(GVectorPolygon obj)
     {
         for (Asteroid a:asteroids)
@@ -116,6 +141,6 @@ public class AsteroidsGame extends GraphicsProgram
             }
         return null;       
     }
-    */
+    
 
 }
