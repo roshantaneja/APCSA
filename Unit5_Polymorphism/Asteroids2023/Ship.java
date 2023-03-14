@@ -17,5 +17,13 @@ public class Ship extends GVectorPolygon
     }
 
     // you'll add a method here in version 0.5.1
+    
+    public Bullet makeBullet(int windowWidth, int windowHeight){
+        Bullet b = new Bullet(windowWidth, windowHeight);
+        b.rotate(getTheta());
+        b.setLocation(getX(), getY());
+        b.increaseVelocity(3);
+        return b;
+    }
 
 }

@@ -99,6 +99,10 @@ public class AsteroidsGame extends GraphicsProgram
             ship.rotate(-15);
         if (e.getKeyCode()==KeyEvent.VK_UP)
             ship.increaseVelocity(0.3);
+        if (e.getKeyCode()==KeyEvent.VK_SPACE){
+            Bullet b = ship.makeBullet();
+            add(b);
+        }
     }
 
     // uncomment out the line below in version 0.6
