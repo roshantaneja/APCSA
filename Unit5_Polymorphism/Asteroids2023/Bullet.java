@@ -14,8 +14,8 @@ public class Bullet extends GVectorPolygon {
        recenter();
        setFilled(true);
     }
-    // complete this in version 0.5
-
+    // complete this in version 0.
+    
     public boolean stillMoving() {
         return numTurns < MAXTURNS;
     }

@@ -60,7 +60,8 @@ public class AsteroidsGame extends GraphicsProgram
         ship = new Ship(getWidth(), getHeight());
         ship.setLocation(getWidth()/2, getHeight()/2);
         add(ship);
-
+        
+        playing = true;
     }
 
     private void makeAsteroids() {
@@ -81,7 +82,7 @@ public class AsteroidsGame extends GraphicsProgram
         initializeVariables();
         setBackground(Color.black);
 
-        while (true) {
+        while (playing) {
             animationLoop();
         }
 
@@ -93,7 +94,12 @@ public class AsteroidsGame extends GraphicsProgram
         }
         for (int i = 0; i < bullets.size(); i++) { //need to remove bullets
             Bullet b = bullets.get(i);
-            if (b.stillMoving()) {
+            GVectorPolygon collisionObject = checkForCollisions(b);
+            if (collisionObject != null) {
+                if (collisionObject instanceof Asteroid){
+                    
+                }
+            } else if (b.stillMoving()) {
                 b.updatePosition();
             } else {
                 remove(bullets.get(i));
@@ -104,6 +110,7 @@ public class AsteroidsGame extends GraphicsProgram
         if (checkForCollisions(ship) != null) {
             numLivesRemaining--;
             if (numLivesRemaining == 0) {
+                playing = false; 
                 gameOver();
             } else {
                 remove(ship);
@@ -130,7 +137,6 @@ public class AsteroidsGame extends GraphicsProgram
             bullets.add(b);
         }
     }
-
     
     private Asteroid checkForCollisions(GVectorPolygon obj)
     {
@@ -142,5 +148,8 @@ public class AsteroidsGame extends GraphicsProgram
         return null;       
     }
     
+    public void gameOver(){
+        
+    }
 
 }
