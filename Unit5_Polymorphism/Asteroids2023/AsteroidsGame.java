@@ -12,9 +12,9 @@ public class AsteroidsGame extends GraphicsProgram
     // uncomment out the line below in version 0.4.1
     private ArrayList<Asteroid> asteroids;
     
-    private boolean playing;
+    private boolean playing, respawned;
     
-    private GLabel notificationLabel, scoreLabel;
+    private GLabel notificationLabel, scoreLabel, livesLabel;
     
     // uncomment out the line below in version 0.4.1
     private Ship ship;
@@ -23,12 +23,89 @@ public class AsteroidsGame extends GraphicsProgram
     // (and don't forget to write bullets = new ArrayList<Bullet>() in the initializeVariables method!)
     private ArrayList<Bullet> bullets; 
     
-    private int level;
-    private int numLivesRemaining;
-    private int score;
+    private int level, numLivesRemaining, score;
     private AudioClip thrustClip, fireClip, bigBangClip, mediumBangClip, smallBangClip;
 
-    public void initializeVariables() {
+    //
+    //
+    // Runtime Methods
+
+    public void run() {
+        // code for version 0.1.1 goes here
+        initVars();
+        setBackground(Color.black);
+
+        while (playing) {
+            animationLoop();
+        }
+
+    }
+
+    public void animationLoop() {
+        updatePositions();
+        if (checkForCollisions(ship) != null) {
+            shipCollided();
+        }
+        
+        checkForBulletCollisions();
+        if(asteroids.size() == 0){
+            level++;
+            remove(ship);
+            initShip();
+            initAsteroids();
+        }
+        
+        scoreLabel.setText("Score: "+score);
+        livesLabel.setText("Lives: " + numLivesRemaining);
+
+        pause(5);
+    }
+
+    private void updatePositions(){
+        for(Asteroid a : asteroids){
+            a.updatePosition();
+        }
+        for(int i = 0; i<bullets.size(); i++){
+            if(bullets.get(i).stillMoving()){
+                bullets.get(i).updatePosition();
+            } else {
+                remove(bullets.remove(i));
+            }
+        }
+        ship.updatePosition();
+    }
+
+    private void checkForBulletCollisions(){
+        for(int i=0; i<bullets.size(); i++){
+            Asteroid collidedAsteroid = checkForCollisions(bullets.get(i));
+            //hit asteroid
+            if(collidedAsteroid != null){
+                remove(bullets.remove(i));
+                remove(asteroids.remove(asteroids.indexOf(collidedAsteroid)));
+
+                if(!(collidedAsteroid instanceof SmallAsteroid)){ //regular or medium asteroid (need to make another)
+                    if(collidedAsteroid instanceof MediumAsteroid){ //medium asteroid
+                        score += 50;
+                        mediumBangClip.play();
+                    } 
+                    else { //regular asteroid
+                        score += 20;
+                        bigBangClip.play();
+                    }
+                    shotAsteroid(collidedAsteroid);
+                } else  {//hit small asteroid
+                    score += 100;
+                    smallBangClip.play();
+                }
+            }
+        }
+    }
+    
+    //
+    //
+    // Init Methods
+
+    public void initVars() {
         thrustClip = MediaTools.loadAudioClip("thrust.wav");   
         fireClip = MediaTools.loadAudioClip("fire.wav");   
         bigBangClip = MediaTools.loadAudioClip("bangLarge.wav");   
@@ -39,7 +116,7 @@ public class AsteroidsGame extends GraphicsProgram
         numLivesRemaining = 3;
         score = 0;
 
-        notificationLabel = new GLabel("(up) = thrust, (left) = rotate left, (right) = rotate right, (space) = fire. Click mouse to continue");
+        notificationLabel = new GLabel("(up) = thrust, (left) = rotate left, (right) = rotate right, (space) = fire, (H) = Hyperspace Click mouse to continue");
         notificationLabel.setColor(Color.WHITE);
         notificationLabel.setFont("Courier-Plain-12");
         notificationLabel.setLocation((getWidth()-notificationLabel.getWidth())/2, getHeight()/2-40);
@@ -51,22 +128,30 @@ public class AsteroidsGame extends GraphicsProgram
         scoreLabel.setLocation(16, 16);
         add(scoreLabel);
         
+        livesLabel = new GLabel("Lives: " + numLivesRemaining);
+        livesLabel.setColor(Color.WHITE);
+        livesLabel.setFont("Courier-Plain-10");
+        livesLabel.setLocation(16, 25);
+        add(livesLabel);
+        
         // uncomment out the line below in version 0.3
-        makeShip();
+        initShip();
         
         asteroids = new ArrayList<Asteroid>();
-        makeAsteroids();
+        initAsteroids();
         
         bullets = new ArrayList<Bullet>();
         
         playing = true;
+        respawned = false;
     }
 
-    private void makeAsteroids() {
+    private void initAsteroids() {
         // code for version 0.3.1 goes here
         for (int i = 0; i < level+3; i ++){
             Asteroid a = new Asteroid(getWidth(), getHeight());
             a.setLocation(Math.random() * getWidth(), Math.random()*getHeight());
+            a.rotate(Math.random()*180 - 90);
             asteroids.add(a);
         }
         for (Asteroid a : asteroids){
@@ -75,71 +160,52 @@ public class AsteroidsGame extends GraphicsProgram
         }
     }
 
-    private void makeShip(){
+    private void initShip(){
         ship = new Ship(getWidth(), getHeight());
         ship.setLocation(getWidth()/2, getHeight()/2);
+        respawned = true;
         add(ship);
     }
 
-    public void run() {
-        // code for version 0.1.1 goes here
-        initializeVariables();
-        setBackground(Color.black);
-
-        while (playing) {
-            animationLoop();
-        }
-
-    }
-
-    public void animationLoop() {
-        for (Asteroid a : asteroids) { // iterate though asteroids
-            a.updatePosition();
-        }
-        for (int i = 0; i < bullets.size(); i++) { //need to remove bullets
-            Bullet b = bullets.get(i);
-            Asteroid asteroid = checkForCollisions(b);
-            if (asteroid != null) {
-                shotAsteroid(asteroid);
-            } else if (b.stillMoving()) {
-                b.updatePosition();
-            } else {
-                remove(bullets.get(i));
-                bullets.remove(i);
-                i--;
-            }
-        }
-        if (checkForCollisions(ship) != null) {
-            shipCollided();
-        }
-        ship.updatePosition();
-        pause(5);
-    }
+    
+    //
+    //
+    // Event Methods
     
     private void shotAsteroid(Asteroid asteroid){
-        if (asteroid instanceof Asteroid && !asteroid instanceof MediumAsteroid){
-            
-        } else if (asteroid instanceof MediumAsteroid){
-            asteroids.remove(asteroid);
-            remove(asteroid);
-            for (int i = 0; i < 3; i++){
-                SmallAsteroid a = new SmallAsteroid(getWidth(), getHeight());
-                a.setLocation(Math.random() * getWidth(), Math.random()*getHeight());
-                asteroids.add(a);
-                a.increaseVelocity(1);
-                add(a);
+        double angle = Math.random() * 360;
+        
+        for (int i = 0; i < 3; i++){
+            Asteroid a = asteroid instanceof MediumAsteroid ? new SmallAsteroid(getWidth(), getHeight()): new MediumAsteroid(getWidth(), getHeight());
+            a.setLocation(asteroid.getX(), asteroid.getY());
+            a.rotate(angle + 120*i);
+            if(a instanceof MediumAsteroid){
+                a.increaseVelocity(1.5);
+            } else{
+                a.increaseVelocity(2);
             }
+            asteroids.add(a);
+            add(a);
         }
+        asteroids.remove(asteroid); 
+        remove(asteroid);
+        
+    }
+    
+    public void mouseClicked(MouseEvent e){
+        remove(notificationLabel);
     }
 
     private void shipCollided(){
-        // numLivesRemaining--; // for now so i can debug
+        if (!respawned){
+            numLivesRemaining--; // for now so i can debug
+        }
         if (numLivesRemaining == 0) {
             playing = false;
             gameOver();
         } else {
             remove(ship);
-            makeShip();
+            initShip();
         }
     }
 
@@ -148,13 +214,18 @@ public class AsteroidsGame extends GraphicsProgram
             ship.rotate(-15); // rotate a bit clockwise
         if (e.getKeyCode()==KeyEvent.VK_LEFT)
             ship.rotate(15);
-        if (e.getKeyCode()==KeyEvent.VK_UP)
+        if (e.getKeyCode()==KeyEvent.VK_UP){
+            if (respawned) respawned = false; //as soon as you move you lose immunity
             ship.increaseVelocity(0.3);
+        }
         if (e.getKeyCode()==KeyEvent.VK_SPACE){
             Bullet b = ship.makeBullet(getWidth(), getHeight());
             b.increaseVelocity(3);
             add(b);
             bullets.add(b);
+        }
+        if (e.getKeyCode()==KeyEvent.VK_H){
+            ship.setLocation(Math.random() * getWidth(), Math.random()*getHeight());
         }
     }
     
@@ -169,7 +240,21 @@ public class AsteroidsGame extends GraphicsProgram
     }
     
     public void gameOver(){
+        removeAll();
+        asteroids.clear();
+        bullets.clear();
         
+        GLabel gameOverLabel = new GLabel("Game Over!");
+        gameOverLabel.setFont("Helvetica-Plain-64");
+        gameOverLabel.setColor(Color.WHITE);
+        gameOverLabel.setLocation(getWidth()/2 - gameOverLabel.getWidth()/2, 100);
+        add(gameOverLabel);
+
+        GLabel stats = new GLabel("You made it to level " + level + " with a score of " + score + ".");
+        stats.setFont("Helvetica-Plain-22");
+        stats.setColor(Color.WHITE);
+        stats.setLocation(getWidth()/2 - stats.getWidth()/2, getHeight()/2-stats.getHeight()/2);
+        add(stats);
     }
 
 }

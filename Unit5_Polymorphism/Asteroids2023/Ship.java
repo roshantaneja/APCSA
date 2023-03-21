@@ -12,7 +12,6 @@ public class Ship extends GVectorPolygon
         addVertex(10, 0);
         addVertex(-10, -10);
         rotate(90);
-        scale(1.5);
         recenter();
     }
 
