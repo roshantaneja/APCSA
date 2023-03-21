@@ -32,12 +32,18 @@ public class GVectorPolygon extends GPolygon
        double thetaInRadians = theta * Math.PI / 180;
        vx += Math.cos(thetaInRadians) * numPixels;
        vy += -Math.sin(thetaInRadians) * numPixels;
-       /*if (vx > MAXVELOCITY){
+       if (vx > MAXVELOCITY){
            vx = MAXVELOCITY;
        }
        if (vy > MAXVELOCITY){
            vy = MAXVELOCITY;
-       }*/
+       }
+       if (vy < -MAXVELOCITY){
+           vy = -MAXVELOCITY;
+       } 
+       if (vx < -MAXVELOCITY){
+           vx = -MAXVELOCITY;
+       } 
     }
 
     public void updatePosition()

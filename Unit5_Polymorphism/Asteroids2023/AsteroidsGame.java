@@ -52,14 +52,12 @@ public class AsteroidsGame extends GraphicsProgram
         add(scoreLabel);
         
         // uncomment out the line below in version 0.3
+        makeShip();
+        
         asteroids = new ArrayList<Asteroid>();
         makeAsteroids();
         
         bullets = new ArrayList<Bullet>();
-        
-        ship = new Ship(getWidth(), getHeight());
-        ship.setLocation(getWidth()/2, getHeight()/2);
-        add(ship);
         
         playing = true;
     }
@@ -75,6 +73,12 @@ public class AsteroidsGame extends GraphicsProgram
             a.increaseVelocity(1);
             add(a);
         }
+    }
+
+    private void makeShip(){
+        ship = new Ship(getWidth(), getHeight());
+        ship.setLocation(getWidth()/2, getHeight()/2);
+        add(ship);
     }
 
     public void run() {
@@ -94,11 +98,9 @@ public class AsteroidsGame extends GraphicsProgram
         }
         for (int i = 0; i < bullets.size(); i++) { //need to remove bullets
             Bullet b = bullets.get(i);
-            GVectorPolygon collisionObject = checkForCollisions(b);
-            if (collisionObject != null) {
-                if (collisionObject instanceof Asteroid){
-                    
-                }
+            Asteroid asteroid = checkForCollisions(b);
+            if (asteroid != null) {
+                shotAsteroid(asteroid);
             } else if (b.stillMoving()) {
                 b.updatePosition();
             } else {
@@ -108,19 +110,37 @@ public class AsteroidsGame extends GraphicsProgram
             }
         }
         if (checkForCollisions(ship) != null) {
-            numLivesRemaining--;
-            if (numLivesRemaining == 0) {
-                playing = false; 
-                gameOver();
-            } else {
-                remove(ship);
-                ship = new Ship(getWidth(), getHeight());
-                ship.setLocation(getWidth()/2, getHeight()/2);
-                add(ship);
-            }
+            shipCollided();
         }
         ship.updatePosition();
         pause(5);
+    }
+    
+    private void shotAsteroid(Asteroid asteroid){
+        if (asteroid instanceof Asteroid && !asteroid instanceof MediumAsteroid){
+            
+        } else if (asteroid instanceof MediumAsteroid){
+            asteroids.remove(asteroid);
+            remove(asteroid);
+            for (int i = 0; i < 3; i++){
+                SmallAsteroid a = new SmallAsteroid(getWidth(), getHeight());
+                a.setLocation(Math.random() * getWidth(), Math.random()*getHeight());
+                asteroids.add(a);
+                a.increaseVelocity(1);
+                add(a);
+            }
+        }
+    }
+
+    private void shipCollided(){
+        // numLivesRemaining--; // for now so i can debug
+        if (numLivesRemaining == 0) {
+            playing = false;
+            gameOver();
+        } else {
+            remove(ship);
+            makeShip();
+        }
     }
 
     public void keyPressed(KeyEvent e){
