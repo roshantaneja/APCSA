@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=AuthorSignature
+comment1.params=authorName\ avgWordLength\ differentWordRatio\ hapaxRatio\ avgWordsPerSentence\ avgPhrasesPerSentence
+comment1.target=AuthorSignature(java.lang.String,\ double,\ double,\ double,\ double,\ double)
+numComments=2

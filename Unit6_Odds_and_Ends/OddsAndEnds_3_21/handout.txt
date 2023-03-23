@@ -1,0 +1,120 @@
+Asteroids
+Introduction
+Asteroids was one of the most influential and important video games in the "Golden Age" of video games. Like Pacman, Space Invaders, Frogger, and Donkey Kong, this game was incredibly popular. The original version was released in 1979 by Atari, although there are now many variants and versions of the game.
+Version 0.0 = Learn about GPolygon
+Before we begin actually writing code, let's learn a bit about a class in the ACM libraries that we've never really used before: GPolygon. This class works similarly to GOval and GRect, although you can create a triangle, pentagon, or really any arbitrary polygon. And, since GPolygon extends GObject like GRect and GOval do, you can use the graphics methods like getColor, getFilled, and so on.
+You can look at the GPolygon documentation at http://www-cs-faculty.stanford.edu/~eroberts/jtf/javadoc/student/acm/graphics/GPolygon.html1, but below I'll describe just a few of the GPolygon methods you'll be using in the asteroids assignment.
+void addVertex(double x, double y)
+This adds a new "vertex" to the polygon, relative to the "origin" of the polygon. Thus, you might make a triangle with code like:
+GPolygon triangle = new GPolygon(); // the "origin" is (0,0)
+triangle.addVertex(3, 4);
+triangle.addVertex(5,1);
+add(triangle); // add it to the felt board
+void recenter()
+According to the official documentation "Recalculates the vertices of the polygon so that they are positioned relative to the geometric center of the object."
+void rotate(double theta)
+This rotates the polygon around its origin. If you recenter the object first, it will rotate around the geometric center of the object. Note that the parameter is in degrees, not radians.2
+void scale(double factor)
+This scales the GPolygon to be proportionally either bigger or smaller. scale(2.0) would make it twice as big; scale(0.5) would make it half as big.
+Version 0.1 = Write the GVectorPolygon class.
+This class should extend GPolygon, but it also makes the object a vector, meaning it knows its velocity (direction and magnitude). This information is stored in three private instance variables: theta, vx, and vy. I found it easier to think about theta as an angle in degrees, since the GPolygon method rotate requires degrees.
+Since all objects in Asteroids wrap around, this class also has two private instance variables maxX and maxY which store the maximum values for x and y. When it comes time to actually move an object around the screen, you'll need to check if it goes off the edge and then make it come back around the other side.
+Be careful when thinking about the relationship between vx, vy, and theta. vx and vy determine the velocity of the GVectorPolygon, while theta determines the direction it is facing. While these are probably often the same, it wont always be for your ship; if your ship is flying quickly through space and you rotate it, it will change theta (the direction is facing) by not vx and vy (since it will still be flying in the same direction). 
+There are eight methods you have to write in this class, although I've written four of them for you.
+Here are some quick notes about what the methods that I left you:
+public GVectorPolygon(int width, int height)
+Initialize all your private instance variables! maxX and maxY should be set to the parameters. 
+public void increaseVelocity(double numPixels)
+This may be the most mathematical method we've written all year, and you may have an advantage if you'd studied vectors in Physics. This should increase the magnitude of the velocity by numPixels. That is, you can't just write vx += numPixels; vy+= numPixels; You'll have to cleverly use sin and cosine.3 The velocity also is not allowed to exceed a "maximum velocity", defined as a constant at the top of the program. If you do try to increase beyond this threshold, vx and vy should be reduced so that the magnitude of the velocity is exactly this constant.
+A common mistake last year was to do a lot of math but not change any private instance variables. Remember that this method should change the velocity, which means that vx and vy will almost certainly need to be changed.
+public void updatePosition()
+You should move one "increment" according to your velocity vector, and then "wrap around" if you've moved off the edge of the screen.
+public void rotate(double angle)
+Just update your private instance variable theta, and then use super.rotate(angle); to just rotate like your superclass.
+Version 0.1.1 = Test your GVectorPolygon class.
+Before you move on to the game of Asteroids, it is very important that the class you wrote above works correctly. I'd like you to think about how to test this. To do so, quickly write a GraphicsProgram called something like Test that follows these steps:
+Create a GVectorPolygon object.
+Add some vertices so it is an interesting shape.
+Rotate it by some odd angle.
+Increase the velocity a bit.
+Add it to the felt board.
+Make a while loop that just updates it over and over again. Something like:
+while (true)
+{
+somePolygon.updatePosition();
+pause(20); // pause 20 milliseconds just to slow things down
+}
+Don't move on to version 0.2 until you have done this. When you turn in your complete version, I'd like you to also print out this testing program.
+Version 0.2 = Write the Asteroid class
+Write the class Asteroid, which extends GVectorPolygon. This class only has one private instance variable; rotation is a double which represents an angle in degrees at which the asteroid slowly rotates as it floats through space. I initialized this to just Math.random(), which makes it a small angle between zero and one degree.
+You really only have two methods to complete in this class. The constructor should initialize the private instance variable rotation, and then "addVertex" quite a few times to give your asteroid the shape of a floating space rock. There is a bit of art required here, and there isnt one perfect way to do it. Spend a bit of time making your asteroid look good, and, if you get stuck, I'd be happy to help you come up with some points that make it look pretty. (Don't forget to use the recenter(); method after you are done adding all your vertices.) You should also make your asteroid white, since it will eventually be drawn on the black background of space.
+Besides the constructor, the only method you actually have to write is updatePosition. Note that you are overriding the updatePosition method in the superclass GVectorPolygon. How do asteroids "update their position" differently than regular GVectorPolygons? Well, they slowly rotate. This method should really just be two lines, one of which will be super.updatePosition();
+Version 0.2.1= Write the MediumAsteroid and SmallAsteroid class
+These classes are subclasses of Asteroid, and should be extremely short. They behave exactly the same way as their larger superclass, except they are half as big and one-fourth as big, respectively. Just set them to be the correct size in the constructor, and that's it. (Don't forget about the scale method!)
+Version 0.3 = Get some Asteroids moving around the screen
+Now, for the first time, we're going to take a look at the AsteroidsGame class, which ties all these classes together and actually plays the game. Eventually, we'll have to add the asteroids, add the ship, listen for keyboard input for moving and firing, detect collisions for asteroids, update the score, and so on. For right now, though, let's just get some asteroids floating around the screen.
+Take a moment to familiarize yourself with the various private instance variables. They don't all apply to this task, since, for example, we haven't really even written the Ship or Bullet class, but the most important one is asteroids, which is an ArrayList of Asteroid.4 We're going to write code to add a few asteroids to this list and to move them around the screen.
+I've written a big part of the init5 method for you. We'll have a few more things to add later, but right now notice that the init method ends with a call to the private method makeAsteroids. This method should add some asteroids to the ArrayList asteroids.6 Before you add them, you'll want to give them a random position and a random rotation, and give them a little nudge to move; I used a.increaseVelocity(1). Make sure you add them both to the ArrayList and to the felt board.
+Next, we need to get the asteroids moving. In the run method, you'll want a while loop that creates an infinite loop, which is the usual way we handle animation. (Throughout the rest of this handout, we'll call this infinite loop "the animation loop.") Within the infinite loop, you'll add a for loop in which you loop through all the asteroids and updatePosition for each one.
+There will be a lot more in this loop later, like moving the ship and the bullets, but we have to write those classes first.
+Version 0.4 = Write the Ship class
+The Ship class is similar to the Asteroid class, as it also extends GVectorPolygon. Obviously the constructor should "addVertex" that makes it look like a space ship rather than a rock. Spend a bit of time making your ship look like a spaceship, and, if you get stuck, I'd be happy to help you come up with some points that make it look right. You should draw your ship facing east, since thats the direction that corresponds to a theta of zero. (Don't forget to use the recenter(); method after you are done adding all your vertices.)
+That's really all there is to the Ship class. We'll have to add a method later to make our ship fire, but that will be in a later version.
+Version 0.4.1 = Add a ship to the init method
+The AsteroidsGame class has a private instance variable called ship. The init method should initialize this variable, putting the ship at the middle of the felt board. It won't move at all yet, of course.
+Version 0.4.2 = Make your ship move
+The ship moves around the screen when the player presses keys, so the first thing you'll have to do is addKeyListeners(); at the end of the init method of AsteroidGame.
+Then, you have to add the method public void keyPressed(KeyEvent e) to decide what to do when the player presses a specific key. It should be obvious what to do, but I had some code like:
+if (e.getKeyCode()==KeyEvent.VK_J)
+ship.rotate(15); // rotate a bit clockwise
+The KeyEvent.VK_J is how you test if the user pressed the "j" key. Look at the instructions at the beginning and make sure you handle at least the "i", "j", and "k" keys right now. (You won't be able to handle the space bar yet, since you haven't yet written the Bullet class, which is necessary for firing.)
+Version 0.5 = Write the Bullet class
+Like Asteroid and Ship, the Bullet class also extends GVectorPolygon. The only difference is that a Bullet has a "lifespan". That is, when a bullet is created, it moves for MAXTURNS turns and then will end up being removed. The private instance variable numTurns should be used to keep track of the "age" of the bullet. 
+You have three things to complete in the Bullet class. The constructor should construct a bullet, although it is much easier to addVertex to make the art of a bullet. My bullet was just a small 2x2 square.
+You will need to add some public method that provides some other class to decide whether the bullet has reached the end of its lifespan. I called my helper method public boolean stillMoving(), but you can call it whatever you'd like.
+Lastly, you'll need to override the updatePosition method to make the bullet increment the numTurns variable as it moves. This should probably just be two lines, one of which is super.updatePosition().
+Version 0.5.1 = Create the method public Bullet makeBullet() in the Ship class.
+It is really the ship's task to actually generate a bullet, so you're going to write a method that returns a Bullet in the Ship class. The bullet returned should be moving at the same angle as the ship is pointing, although it should be moving significantly faster.7
+Version 0.5.2 = Add bullets and make them move
+You are now ready to add a line or two to the keyPressed method to have the ship fire when the user presses VK_SPACE. When this happens, you should add a bullet to the private instance variable ArrayList<Bullet> bullets, and also add that bullet to the felt board. This will, interestingly, make the bullet appear on the screen, but the bullets won't move yet.
+Note: in past years, the most common bug on this entire assignment was forgetting to initialize the ArrayList bullets. Youll need to write bullets = new ArrayList<Bullet>(); somewhere. I couldnt provide this for you, since it wouldnt compile until you finished the Bullet class in the previous step.
+To get the bullets to move, you should add code within the infinite animation loop inside the run method. Recall how you had a for loop that gave each asteroid a chance to move. You'll do almost exactly the same thing for the bullets. The only difference is that you need to make sure the bullets get removed when they have reached the end of their "lifespans." You should now be able to fire successfully, although the asteroids won't get removed yet.
+Version 0.6 = Make your ship collide with asteroids
+Notice that I wrote a method for you called private Asteroid checkForCollisions(GVectorObject obj) in the class AsteroidsGame. This method takes any GVectorObject as a parameter, and returns the Asteroid that collided with that object, or null if no Asteroid did. Through the magic of polymorphism, you can use this method to determine when your ship collides with an asteroid (you use a life), or a bullet collides with an asteroid (the asteroid is destroyed). Right now we're just going to add code to make your ship collide.
+You should add few lines inside the animation loop in the run method to make this happen. When your ship collides, there are quite a few things to do, so it makes sense to put all that code in a method called something like private void shipCollided(). For right now, you can just move your ship back to the middle of the screen in shipCollided. Eventually, though, we'll have quite a few more things to do, including subtracting a life, adding a message to the screen about how many lives remain, and putting the game in a non-playing state8.
+Version 0.7 = Make your bullets destroy asteroids
+Finally we get to blow up those asteroids! You should see if any of your bullets collided with an asteroid. You'll probably want to loop through the bullets ArrayList and use the checkForCollisions method on each bullet. If you detect a collision, that means the bullet shot an asteroid. If this happens, there are quite a few things to do, so I'd again suggest putting all the code in a separate method, something like private void shotAsteroid(Asteroid a).
+If you shoot an asteroid, it should be removed from the screen and the ArrayList of asteroids. In addition, though, if the destroyed asteroid is a "large" Asteroid, you should generate three more MediumAsteroids. These asteroids should be added at the same place as the destroyed asteroid, but moving a bit faster. I used a random vector angle, but made the three new asteroids move away from each other at 120 angles, which gives the effect of the destroyed asteroid breaking up into three parts. Dont forget to add the new asteroids both to the felt board and the ArrayList of asteroids.
+You'll of course also do exactly the same process if a MediumAsteroid is destroyed, only you'll need to generate three new SmallAsteroids. The code is very similar.
+If a SmallAsteroid gets destroyed, then it is just removed.
+Version 0.8 = Keep track of the score
+The AsteroidsGame class has two private instance variables  score and scoreLabel  that we haven't yet used. You may have noticed that I added scoreLabel to the felt board, but the score is always zero. You should update this label with some reasonable scoring system: I made each asteroid worth ten points, regardless of size. You should feel free to do anything reasonable.
+Version 0.8.1 = Stopping the game play
+The footnote for version 0.6 discusses the problem of losing a life, getting reset back to the middle of the screen where there might be an asteroid, which would cause you to lose another life unfairly. The best solution to this is to put the game into a "non-playing" mode. When the game is in "non-playing" mode, the asteroids should continue to float around, but you should not be able to move the ship nor fire, and you should not be able to collide with an asteroid. 
+There is a boolean private instance variable playing that is designed for this purpose. You should add a few ifs to the animation loop such that when playing is false, some of the code doesn't execute. 
+When should you toggle playing? Certainly colliding with an asteroid should set playing from true to false. 
+The game should "begin" when the user clicks the mouse, so you should addMouseListeners() in the init method, and then write a method public void mouseClicked(MouseEvent e) that handles a mouse click by toggling the playing variable, possibly setting it from false to true.
+There is a GLabel called notificationLabel that can be used to show informational messages. I wrote code that uses that variable to show the instructions at the beginning of the game, but you might also want to use it to inform the user that he or she lost a life, and should click the mouse to continue.
+Version 0.8.2 = Add support for multiple levels
+What happens when you shoot every asteroid? The game should continue going. There are three asteroids initially, but each level should have one more asteroid. (That is, three asteroids in level #0, four asteroids in level #1, five asteroids in level #2, etc.) You already have a method called makeAsteroids, which you completed in version 0.3, so you should just call this method again in your animation loop if there are no more asteroids.
+There is one subtle problem that happens here: The makeAsteriods method just adds the asteroids randomly to the screen, and it seems a bit unfair if you complete a level and the next level begins with asteroids so close to you that you collide with them immediately. One possible solution involves adding a few lines to the makeAsteroids method that uses a while loop to randomly pick other locations if an asteroid is randomly too close to the ship.
+Version 0.9 = Add sound effects
+As one final nice feature, you can add a few lines like bigBangClip.play() to add sound effects. You'll notice that I provided five sound effects for you: a "thrust" sound, a "fire" sound, and three "bangs" that correspond to the size of the three asteroids.
+Version 1.0 = You are done!
+Congratulations! You're finished. Have a bit of fun now playing your game.
+There are a few possible improvements I thought of (hint: extra credit) if you are interested, but feel free to use your imagination to add any other features you want.
+* Some versions of the game have a "hyperspace" feature when you press the "h" key, which moves your ship to a completely random location. This can be helpful in a pinch if you are just about to collide with something, but can be risky since you don't know where you might end up.
+* You might also consider adding a "stop" method to the GVectorPolygon class, which you can use to stop your spaceship for better control, perhaps when you press the "k" key.9
+* Many games have a "pause" feature, which might enable you to pause the game, perhaps when you press the "p" key.
+* The original Atari arcade game had a special UFO that flew across the screen every minute or so and shot at your ship with its own bullets. It always seemed to come up near the end of levels, when you were patiently waiting to shoot one last small asteroid.
+* The original Atari arcade game also "shields", which activated for a short time, and eventually were unavailable when you ran out of "energy".
+* You are certainly welcome to add any other great ideas you have.
+1 You'll find yourself looking at some of the documentation for the ACM classes in this assignment. If you Google Java ACM, the first link that comes up shows the complete list of documentation for all the classes. Oh, and Microsoft Word will not permit you to begin footnotes starting with the number zero, so, no, I don't owe anyone ice cream.
+2 This was a big source of bugs for me when I was writing this for the first time. You'll have to remember how to convert between radians and degrees in this program. 
+3 Have we done any trigonometry before? The syntax is something like double value = Math.cos(Math.PI/3); There are lots of useful methods in the Math library.
+4 Remember that, through the magic of polymorphism, some of the asteroids in this ArrayList will be Asteroids, some will be MediumAsteroids, and some will be SmallAsteroids.
+5 The init method of a GraphicsProgram gets called before the run method begins. It is sort of like the constructor for a GraphicsProgram.
+6 How many asteroids should you add? Well, for right now, you should just add three. However, in a later task we're going to be introducing the idea of levels. You'll notice you have a private instance variable level, which starts at zero. The idea is that there are three asteroids on level zero, four on level one, five on level two, and so on. So, if you want to add (3+level) asteroids, that ends up being the correct thing to do for later.
+7 I had a line like bullet.increaseVelocity(3), although feel free to experiment with how fast you want your bullets moving.
+8 It would sort of seem unfair to collide with an asteroid, then have your ship get moved back to the middle of the screen, where sadly you immediately collide with another asteroid. That might happen at this version, but we'll fix it later. This is the job of the playing private instance variable.
+9 This was not a feature of the original game, although my wife asked me to add this to my sample version when I asked her to test it out.

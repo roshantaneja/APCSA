@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=ReadingFromFiles
+comment1.params=
+comment1.target=void\ run()
+comment2.params=words
+comment2.target=java.lang.String\ getFirstWordAlphabetically(java.lang.String[])
+numComments=3

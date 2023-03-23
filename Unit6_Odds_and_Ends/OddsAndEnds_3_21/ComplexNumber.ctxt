@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=ComplexNumber
+comment1.params=realPart\ imagPart
+comment1.target=ComplexNumber(double,\ double)
+comment2.params=realPart
+comment2.target=ComplexNumber(double)
+comment3.params=other
+comment3.target=ComplexNumber\ add(ComplexNumber)
+comment3.text=\ This\ method\ adds\ together\ two\ complex\ numbers.\r\n\ \ \ \ \ Happy\ St.\ Patrick's\ Day\!\r\n\ \ \ \ \ @param\ other\ the\ other\ complex\ number\r\n\ \ \ \ \ @return\ the\ sum\ of\ the\ two\ complex\ numbers\r\n
+comment4.params=other
+comment4.target=ComplexNumber\ multiply(ComplexNumber)
+comment5.params=
+comment5.target=ComplexNumber\ squared()
+comment6.params=
+comment6.target=java.lang.String\ toString()
+numComments=7
