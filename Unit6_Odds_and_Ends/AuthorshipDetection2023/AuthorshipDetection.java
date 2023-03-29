@@ -11,6 +11,22 @@ public class AuthorshipDetection extends ConsoleProgram
     public void run()
     {
         loadAuthorSignatures();
+        String filename = readLine("Enter file name: ");
+        String fileContents = FileHelper.getFileContents(filename);
+        ArrayList<String> sentences = getSentenceFromContents(fileContents);
+        ArrayList<String> words = new ArrayList<String>();
+        
+        for (String sentence: sentences)
+        {
+            ArrayList<String> splitSentences = getWordsFromSentence(sentence);
+            for (String word: splitSentences) 
+            {
+                words.add(word);
+            }
+        }
+        println(sentences.size());
+        println(words.size());
+        println(computerAverageWordLength(words));
         
         // task #1 goes here
     }
@@ -35,5 +51,71 @@ public class AuthorshipDetection extends ConsoleProgram
         authors[11] = new AuthorSignature("Sir Arthur Conan Doyle", 4.16808311494, 0.0822989796874, 0.0394458485444, 14.717564466, 2.2220872148);
         authors[12] = new AuthorSignature("William Shakespeare", 4.16216957834, 0.105602561171, 0.0575348730848, 9.34707371975, 2.24620146314);
     }
-
+    
+    private ArrayList<String> getSentenceFromContents(String fileContents){
+        ArrayList<String> result = new ArrayList<String>();
+        int last = 0;
+        for (int i = 0; i < fileContents.length() - 1; i ++){
+            for (int j = 0; j < PUNCTUATION.length() - 1; j ++){
+                if (fileContents.substring(i, i+1).equals(PUNCTUATION.substring(j, j+1))) {
+                    result.add(fileContents.substring(last + 1, i));
+                    last = i;
+                }
+            }
+        }
+        return result;
+    }
+     private ArrayList<String> getWordsFromSentence(String sentence)
+     {
+         ArrayList<String> result = new ArrayList<String>();
+         String[] splitSentence = sentence.split(" "); 
+         for (int i=0; i<splitSentence.length; i++)
+         {
+             String cleaned = clean(splitSentence[i]);
+             if (cleaned.length() > 0){
+                 result.add(cleaned);
+             }
+         }
+         return result;
+    }
+    private ArrayList<String> getAllWordsFromSetences(ArrayList<String> sentences)
+    {
+        ArrayList<String> result = new ArrayList<String>();
+        for(String sentence: sentences)
+        {
+             ArrayList<String> a = getWordsFromSentence(sentence);
+             for (String word: a){
+                 result.add(word);
+             }
+        }
+        return result;
+    }
+    private String clean(String word)
+    {
+        word = word.toLowerCase();
+        if (word.length() == 0){
+            return "";
+        }
+        while (PUNCTUATION.indexOf(word.substring(0,1)) != -1)
+        {
+            word = word.substring(1);
+            if (word.length() == 0){
+                return "";
+            }
+        }
+        while (PUNCTUATION.indexOf(word.substring(word.length()-1)) != -1)
+        {
+            word = word.substring(0, word.length() - 1);
+        }
+        return word;
+    }
+    private double computerAverageWordLength(ArrayList<String> words)
+    {
+        int counter =0; 
+        for (String word: words)
+        {
+            counter+=word.length();
+        }
+        return (1.0 * counter)/words.size();
+    }
 }
