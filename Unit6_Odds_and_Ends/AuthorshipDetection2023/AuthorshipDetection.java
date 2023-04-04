@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class AuthorshipDetection extends ConsoleProgram
 {
     private static final String PUNCTUATION = "'!\",;:.-?)([]<>*#\n\t\r ";
+    private static final String VOWELS = "aeiouy";
     private static final double[] WEIGHT = {11.0, 33.0, 50.0, 0.4, 4.0};
     private AuthorSignature[] authors;
 
@@ -26,7 +27,13 @@ public class AuthorshipDetection extends ConsoleProgram
         }
         println(sentences.size());
         println(words.size());
-        println(computerAverageWordLength(words));
+        println("Avg Word Length: " + computerAverageWordLength(words));
+        println("Diff word Ratio:" + computeDifferentWordRatio(words));
+        println("Hapax Legomanana: " + computeHapaxLegomenaRatio(words));
+        println("Avg Words Per Sentence : " + computeAverageWordsPerSentence(sentences));
+        println("Sentence Complexity: " + computeSentenceComplexity(sentences));
+
+
         
         // task #1 goes here
     }
@@ -56,11 +63,11 @@ public class AuthorshipDetection extends ConsoleProgram
         ArrayList<String> result = new ArrayList<String>();
         int last = 0;
         for (int i = 0; i < fileContents.length() - 1; i ++){
-            for (int j = 0; j < PUNCTUATION.length() - 1; j ++){
-                if (fileContents.substring(i, i+1).equals(PUNCTUATION.substring(j, j+1))) {
-                    result.add(fileContents.substring(last + 1, i));
-                    last = i;
-                }
+            if (fileContents.substring(i, i+1).equals(".") || 
+                fileContents.substring(i, i+1).equals("?") || 
+                fileContents.substring(i, i+1).equals("!")){
+                result.add(fileContents.substring(last + 1, i));
+                last = i;
             }
         }
         return result;
@@ -109,6 +116,8 @@ public class AuthorshipDetection extends ConsoleProgram
         }
         return word;
     }
+    
+    //calculation Methods
     private double computerAverageWordLength(ArrayList<String> words)
     {
         int counter =0; 
@@ -118,4 +127,96 @@ public class AuthorshipDetection extends ConsoleProgram
         }
         return (1.0 * counter)/words.size();
     }
+    
+    private ArrayList<String> getUniqueWords(ArrayList<String> words){
+
+        //fill result arraylist with all unique strings in words
+        ArrayList<String> result = new ArrayList<String>();
+        for (String word: words){
+            if (!result.contains(word)){
+                result.add(word);
+            }
+        }
+        return result;
+    }
+    
+    private double computeDifferentWordRatio(ArrayList<String> words){
+        //compute ratio of unique words to total words
+        ArrayList<String> uniqueWords = getUniqueWords(words);
+        return (1.0 * uniqueWords.size())/words.size();
+    }
+    
+    private int frequency(ArrayList<String> words, String word ){
+        int counter = 0;
+        for (String test : words){
+            if (word.equals(test)){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    private double computeHapaxLegomenaRatio(ArrayList<String> words){
+        //compute ratio of words that appear only once to total words
+        ArrayList<String> uniqueWords = getUniqueWords(words);
+        int counter = 0;
+        for (String word: uniqueWords){
+            if (frequency(words, word) == 1){
+                counter++;
+            }
+        }
+        return (1.0 * counter)/words.size();
+    }
+
+    private double computeAverageWordsPerSentence(ArrayList<String> sentences){
+        //compute average number of words per sentence
+        int counter = 0;
+        for (String sentence: sentences){
+            counter += getWordsFromSentence(sentence).size();
+        }
+        return (1.0 * counter)/sentences.size();
+    }
+
+    public ArrayList<String> getPhrasesFromSentence(String sentence) {
+        ArrayList<String> result = new ArrayList<String>();
+        int last = 0;
+        for (int i = 0; i < sentence.length() - 1; i ++){
+            if (sentence.substring(i, i+1).equals(",") ||
+                sentence.substring(i, i+1).equals(";") ||
+                sentence.substring(i, i+1).equals(":")){
+                result.add(sentence.substring(last + 1, i));
+                last = i;
+            }
+        }
+        return result;
+    }
+
+    private double computeSentenceComplexity(ArrayList<String> sentences){
+        //compute average number of phrases per sentence
+        int counter = 0;
+        for (String sentence: sentences){
+            counter += getPhrasesFromSentence(sentence).size();
+        }
+        return (1.0 * counter)/sentences.size();
+    }
+
+    public int countSyllables(String word){
+        //count the number of syllables in a word
+        int counter = 0;
+        for (int i = 0; i < word.length(); i++){
+            if (VOWELS.indexOf(word.substring(i, i+1)) != -1){
+                counter++;
+            }
+        }
+        return counter;
+    }
+    private double computeAverageSyllablesPerWord(ArrayList<String> words){
+        //compute average number of syllables per word
+        int counter = 0;
+        for (String word: words){
+            counter += countSyllables(word);
+        }
+        return (1.0 * counter)/words.size();
+    }
+
 }
