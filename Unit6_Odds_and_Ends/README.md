@@ -4,20 +4,20 @@ Unit #2 = "Odds & Ends" checklist
 - [x] List interface
 - [x] final
 - [ ] ArrayList vs ArrayList<E>
-- [ ] counting in binary
-- [ ] public/private
-- [ ] “encapsulation” : getters and setters
-- [ ] mutable vs immutable
-- [ ] Integer.MIN_VALUE, Integer.MAX_VALUE
-- [ ] Demorgan's law
-- [ ] Javadoc: @param and @return
-- [ ] exceptions
-- [ ] .toString, .equal
-- [ ] "this"
-- [ ] Static variables and methods
-- [ ] overloading methods
-- [ ] Objects are pointers, == vs .equals
-- [ ] null
+- [x] counting in binary
+- [x] public/private
+- [x] “encapsulation” : getters and setters
+- [x] mutable vs immutable
+- [x] Integer.MIN_VALUE, Integer.MAX_VALUE
+- [x] Demorgan's law
+- [x] Javadoc: @param and @return
+- [x] exceptions
+- [x] .toString, .equal
+- [x] "this"
+- [x] Static variables and methods
+- [x] overloading methods
+- [x] Objects are pointers, == vs .equals
+- [x] null
 - [ ] recursion
-- [ ] .compareTo for Strings
+- [x] .compareTo for Strings
 - [ ] searching and sorting
