@@ -45,7 +45,7 @@ Hours spent doing homework: 3.5
 
 ### SEMESTER 2
 
-- [ ] **Unit #4** 
+- [x] **Unit #4** 
 
 >Welcome back! (Let’s review 2D arrays and look at some multiple choice.)
 >* Connect Four
@@ -58,7 +58,7 @@ Hours spent doing homework: 3.5
 >>Test approximately January 30
 
 
-- [ ] **Unit #5**
+- [x] **Unit #5**
 
 >Polymorphism and inheritance
 >* School
@@ -68,7 +68,7 @@ Hours spent doing homework: 3.5
 >>Test approximately March 3
 
 
-- [ ] **Unit #6**
+- [x] **Unit #6**
 
 >Odds and ends
 >* Yahtzee
