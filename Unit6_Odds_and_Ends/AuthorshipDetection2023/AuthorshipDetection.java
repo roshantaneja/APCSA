@@ -6,7 +6,7 @@ public class AuthorshipDetection extends ConsoleProgram
 {
     private static final String PUNCTUATION = "'!\",;:.-?)([]<>*#\n\t\r ";
     private static final String VOWELS = "aeiouy";
-    private static final double[] WEIGHT = {11.0, 33.0, 50.0, 0.4, 4.0};
+    
     private AuthorSignature[] authors;
 
     public void run()
@@ -17,6 +17,8 @@ public class AuthorshipDetection extends ConsoleProgram
         ArrayList<String> sentences = getSentenceFromContents(fileContents);
         ArrayList<String> words = new ArrayList<String>();
         
+        AuthorSignature unknownAuthor;
+        
         for (String sentence: sentences)
         {
             ArrayList<String> splitSentences = getWordsFromSentence(sentence);
@@ -25,15 +27,40 @@ public class AuthorshipDetection extends ConsoleProgram
                 words.add(word);
             }
         }
-        println(sentences.size());
-        println(words.size());
-        println("Avg Word Length: " + computerAverageWordLength(words));
-        println("Diff word Ratio:" + computeDifferentWordRatio(words));
-        println("Hapax Legomanana: " + computeHapaxLegomenaRatio(words));
-        println("Avg Words Per Sentence : " + computeAverageWordsPerSentence(sentences));
-        println("Sentence Complexity: " + computeSentenceComplexity(sentences));
-
-
+        println("Sentences====" + sentences.size());
+        println("Words====" + words.size());
+        
+        println();
+        
+        
+        double a = computerAverageWordLength(words);
+        println("    Avg Word Length = " + a);
+        double b = computeDifferentWordRatio(words);
+        println("    Diff word Ratio = " + b);
+        double c = computeHapaxLegomenaRatio(words);
+        println("    Hapax legomanana ratio = " + c);
+        double d = computeAverageWordsPerSentence(sentences);
+        println("    Avg words per sentence = " + d);
+        double e = computeSentenceComplexity(sentences);
+        println("    Sentence complexity = " + e);
+        
+        unknownAuthor = new AuthorSignature("unknown", a, b, c, d, e);
+        
+        println();
+        
+        String champName = "";
+        double champScore = Integer.MAX_VALUE;
+        for (AuthorSignature author:authors){
+            double score = author.distanceTo(unknownAuthor);
+            if (score < champScore){
+                champScore = score;
+                champName = author.getName();
+            }
+            println(author.getName() + ": " + score);
+        }
+        
+        println();
+        println("Predicted author = " + champName);
         
         // task #1 goes here
     }
@@ -188,6 +215,7 @@ public class AuthorshipDetection extends ConsoleProgram
                 last = i;
             }
         }
+        result.add(sentence.substring(last + 1));
         return result;
     }
 
@@ -198,25 +226,6 @@ public class AuthorshipDetection extends ConsoleProgram
             counter += getPhrasesFromSentence(sentence).size();
         }
         return (1.0 * counter)/sentences.size();
-    }
-
-    public int countSyllables(String word){
-        //count the number of syllables in a word
-        int counter = 0;
-        for (int i = 0; i < word.length(); i++){
-            if (VOWELS.indexOf(word.substring(i, i+1)) != -1){
-                counter++;
-            }
-        }
-        return counter;
-    }
-    private double computeAverageSyllablesPerWord(ArrayList<String> words){
-        //compute average number of syllables per word
-        int counter = 0;
-        for (String word: words){
-            counter += countSyllables(word);
-        }
-        return (1.0 * counter)/words.size();
     }
 
 }
