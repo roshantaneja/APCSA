@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=SearchingProgram
+comment1.params=
+comment1.target=void\ run()
+comment2.params=len
+comment2.target=int[]\ getRandomArray(int)
+comment3.params=nums\ value
+comment3.target=boolean\ linearSearch(int[],\ int)
+comment4.params=nums\ value
+comment4.target=boolean\ binarySearch(int[],\ int)
+numComments=5

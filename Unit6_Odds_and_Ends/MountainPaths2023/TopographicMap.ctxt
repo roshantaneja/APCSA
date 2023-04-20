@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=filename\ rows\ cols
+comment0.target=TopographicMap(java.lang.String,\ int,\ int)
+comment1.params=
+comment1.target=boolean\ isValid()
+comment2.params=
+comment2.target=double\ findMinimum()
+comment3.params=
+comment3.target=double\ findMaximum()
+comment4.params=graphics
+comment4.target=void\ drawMap(acm.program.GraphicsProgram)
+comment5.params=graphics\ startRow\ drawColor
+comment5.target=double\ drawLowestElevPath(acm.program.GraphicsProgram,\ int,\ java.awt.Color)
+comment6.params=graphics
+comment6.target=int\ getIndexOfLowestElevPath(acm.program.GraphicsProgram)
+numComments=7
