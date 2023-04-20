@@ -1,12 +1,13 @@
 #BlueJ class context
-comment0.params=
-comment0.target=void\ init()
+comment0.target=MountainPathFinder
 comment1.params=
-comment1.target=void\ run()
+comment1.target=void\ init()
 comment2.params=
-comment2.target=void\ initGUI()
-comment3.params=event
-comment3.target=void\ actionPerformed(java.awt.event.ActionEvent)
-comment4.params=
-comment4.target=void\ handleLoadButton()
-numComments=5
+comment2.target=void\ run()
+comment3.params=
+comment3.target=void\ initGUI()
+comment4.params=event
+comment4.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment5.params=
+comment5.target=void\ handleLoadButton()
+numComments=6
