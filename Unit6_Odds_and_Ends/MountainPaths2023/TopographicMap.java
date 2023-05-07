@@ -12,13 +12,13 @@ public class TopographicMap
     public TopographicMap(String fileName, int rows, int cols)
     {
         // you'll do this in task #1
-        valid = true;
-        mapData = new double[rows][cols];
+        
         double[] data = FileHelper.readDataFromFile(fileName, rows * cols);
         if (data.length == 0){
             valid = false;
         } else {
             //use data to fill mapdata
+            mapData = new double[rows][cols];
             int index = 0;
             for (int i = 0; i < rows; i++){
                 for (int j = 0; j < cols; j++){
@@ -26,6 +26,7 @@ public class TopographicMap
                     index++;
                 }
             }
+            valid = true;
         }
     }
 
@@ -34,7 +35,7 @@ public class TopographicMap
     private double findMinimum()
     {
         double min = mapData[0][0];
-        for (for int i = 0; i < mapData.length; i++){
+        for (int i = 0; i < mapData.length; i++){
             for (int j = 0; j < mapData[i].length; j++){
                 if (mapData[i][j] < min){
                     min = mapData[i][j];
@@ -61,32 +62,26 @@ public class TopographicMap
     {
         double min = this.findMinimum();
         double max = this.findMaximum();
-
-
+        System.out.println(min + " " + max);
         for (int i = 0; i < mapData.length; i++){
             for (int j = 0; j < mapData[i].length; j++){
                 double value = mapData[i][j];
-                double scaledValue = (value - min) / (max - min);
+                int gray = (int)((value - min) / (max - min) * 255);
                 GRect rect = new GRect(j, i, 1, 1);
+                rect.setColor(new Color(gray, gray, gray));
                 rect.setFilled(true);
-                rect.setFillColor(new Color((float)scaledValue, (float)scaledValue, (float)scaledValue));
                 graphics.add(rect);
             }
         }
-
         // you'll do this in task #4
     }
 
-    public double drawLowestElevPath(GraphicsProgram graphics, int startRow, Color drawColor)
-    {
-        // you'll do this in task #5 
-        return 0; // just to get it to compile
+    public int drawLowestElevPath(GraphicsProgram graphics, int startRow, Color drawColor){
+        // you'll do this in task #7
+        return 0;
     }
 
-    public int getIndexOfLowestElevPath(GraphicsProgram graphics)
-    {
-        // you'll do this in task #6 
-        return 0; // just to get it to compile
-    }
+    //assess between all three coordinates to the left and pick the one with the least elevation change from your current position, return either 0, 1, or 2 based on the choice
+
     
 }

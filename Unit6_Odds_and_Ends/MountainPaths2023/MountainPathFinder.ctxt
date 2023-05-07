@@ -10,4 +10,6 @@ comment4.params=event
 comment4.target=void\ actionPerformed(java.awt.event.ActionEvent)
 comment5.params=
 comment5.target=void\ handleLoadButton()
-numComments=6
+comment6.params=
+comment6.target=void\ handleDrawButton()
+numComments=7

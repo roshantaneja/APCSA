@@ -62,6 +62,8 @@ public class MountainPathFinder extends GraphicsProgram
     {
         if (event.getSource() == loadButton)
             handleLoadButton();
+        if (event.getSource() == drawButton)
+            handleDrawButton();
         // more to do here eventually
     }
 
@@ -80,6 +82,13 @@ public class MountainPathFinder extends GraphicsProgram
         } else {
             JOptionPane.showMessageDialog(this, "No bueno");
         }
+    }
+
+    private void handleDrawButton(){
+        removeAll();
+        mountainMap.drawMap(this);
+        drawButton.setEnabled(false);
+        findPathButton.setEnabled(true);
     }
 
 
