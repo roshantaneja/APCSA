@@ -64,12 +64,13 @@ public class MountainPathFinder extends GraphicsProgram
             handleLoadButton();
         if (event.getSource() == drawButton)
             handleDrawButton();
+        if (event.getSource() == findPathButton)
+            handleFindPathButton();
         // more to do here eventually
     }
 
     private void handleLoadButton()
     {
-        // you'll do this in task #2
         removeAll();
         String fileName = fileNameField.getText();
         int rows = Integer.parseInt(rowsField.getText());
@@ -82,6 +83,7 @@ public class MountainPathFinder extends GraphicsProgram
         } else {
             JOptionPane.showMessageDialog(this, "No bueno");
         }
+        findPathButton.setEnabled(false);
     }
 
     private void handleDrawButton(){
@@ -90,6 +92,10 @@ public class MountainPathFinder extends GraphicsProgram
         drawButton.setEnabled(false);
         findPathButton.setEnabled(true);
     }
-
+    
+    private void handleFindPathButton(){
+        int bestIndex = mountainMap.getIndexOfLowestElevPath(this);
+        mountainMap.drawLowestElevPath(this, bestIndex, Color.green);
+    }
 
 }

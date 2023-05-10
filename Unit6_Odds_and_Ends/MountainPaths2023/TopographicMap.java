@@ -73,12 +73,67 @@ public class TopographicMap
                 graphics.add(rect);
             }
         }
-        // you'll do this in task #4
     }
 
-    public int drawLowestElevPath(GraphicsProgram graphics, int startRow, Color drawColor){
-        // you'll do this in task #7
-        return 0;
+    public double drawLowestElevPath(GraphicsProgram graphics, int startRow, Color drawColor){
+        double sum = 0;
+        int currentRow = startRow;
+        for (int c = 0; c < mapData[0].length - 1; c++){
+            double[] choices = new double[3];
+            if (currentRow == 0){ // change up
+                choices[0] = Integer.MAX_VALUE;
+            } else {
+                choices[0] = Math.abs(mapData[currentRow][c] - mapData[currentRow - 1][c+1]);
+            }
+            choices[1] = Math.abs(mapData[currentRow][c] - mapData[currentRow][c + 1]); // change forward
+            if (currentRow == mapData.length - 1){ // change down
+                choices[2] = Integer.MAX_VALUE;
+            } else {
+                choices[2] = Math.abs(mapData[currentRow][c] - mapData[currentRow + 1][c+1]);
+            }
+
+            int choice;
+            if (choices[1] <= choices[0] && choices[1] <= choices[2]){ // if right is good option
+                choice = 1;
+            } else if (choices[0] < choices[2]){ // if up is good option
+                choice = 0;
+            } else if (choices[2] < choices[1]){
+                choice = 2;
+            } else {
+                if (Math.random() < 0.5){
+                    choice = 0;
+                } else {
+                    choice = 2;
+                }
+            }
+
+            if (choice == 0){
+                currentRow--;
+            } else if (choice == 2){
+                currentRow++;
+            }
+
+            sum += choices[choice];
+
+            GRect pixel = new GRect(c, currentRow, 1, 1);
+            pixel.setColor(drawColor);
+            pixel.setFilled(true);
+            graphics.add(pixel);
+        }
+        return sum;
+    }
+    
+    public int getIndexOfLowestElevPath(GraphicsProgram graphics){
+        int bestLineIndex = 0;
+        double bestLineLength = 0;
+        for (int i = 1; i < mapData.length; i++){
+            double currentLineLength = drawLowestElevPath(graphics, i, Color.red);
+            if (bestLineLength > currentLineLength){
+                bestLineIndex = i;
+                bestLineLength = currentLineLength;
+            }
+        }
+        return bestLineIndex;
     }
 
     //assess between all three coordinates to the left and pick the one with the least elevation change from your current position, return either 0, 1, or 2 based on the choice
