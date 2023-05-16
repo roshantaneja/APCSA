@@ -14,4 +14,6 @@ comment6.params=
 comment6.target=void\ handleDrawButton()
 comment7.params=
 comment7.target=void\ handleFindPathButton()
-numComments=8
+comment8.params=
+comment8.target=void\ handleDownhillPathButton()
+numComments=9

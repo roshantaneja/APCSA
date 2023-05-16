@@ -1,4 +1,4 @@
-import acm.graphics.*;
+ import acm.graphics.*;
 import java.awt.Color;
 import acm.program.*;
 
@@ -122,12 +122,79 @@ public class TopographicMap
         }
         return sum;
     }
+
+    // use djikstras algorithm to find the shortest path from startRow point on the left to any point on the right
+    // return the value of the path based on the cumulative value of altitude change
+    public double drawLowestDownhillPath(GraphicsProgram graphics, int startRow, Color drawColor){
+        double sum = 0;
+        int currentRow = startRow;
+        for (int c = 0; c < mapData[0].length - 1; c++){
+            double[] choices = new double[3];
+            if (currentRow == 0){ // change up
+                choices[0] = Integer.MAX_VALUE;
+            } else {
+                choices[0] = mapData[currentRow][c] - mapData[currentRow - 1][c+1];
+            }
+            choices[1] = mapData[currentRow][c] - mapData[currentRow][c + 1]; // change forward
+            if (currentRow == mapData.length - 1){ // change down
+                choices[2] = Integer.MAX_VALUE;
+            } else {
+                choices[2] = mapData[currentRow][c] - mapData[currentRow + 1][c+1];
+            }
+
+            int choice;
+            if (choices[1] <= choices[0] && choices[1] <= choices[2]){ // if right is good option
+                choice = 1;
+            } else if (choices[0] < choices[2]){ // if up is good option
+                choice = 0;
+            } else if (choices[2] < choices[1]){
+                choice = 2;
+            } else {
+                if (Math.random() < 0.5){
+                    choice = 0;
+                } else {
+                    choice = 2;
+                }
+            }
+
+            if (choice == 0){
+                currentRow--;
+            } else if (choice == 2){
+                currentRow++;
+            }
+
+            sum += choices[choice];
+
+            GRect pixel = new GRect(c, currentRow, 1, 1);
+            pixel.setColor(drawColor);
+            pixel.setFilled(true);
+            graphics.add(pixel);
+        }
+        return sum;
+    }
+    
+    public double drawLowestDjikstras(GraphicsProgram graphics, int startRow, Color drawColor){
+        return 0;
+    }
     
     public int getIndexOfLowestElevPath(GraphicsProgram graphics){
         int bestLineIndex = 0;
         double bestLineLength = 0;
         for (int i = 1; i < mapData.length; i++){
             double currentLineLength = drawLowestElevPath(graphics, i, Color.red);
+            if (bestLineLength > currentLineLength){
+                bestLineIndex = i;
+                bestLineLength = currentLineLength;
+            }
+        }
+        return bestLineIndex;
+    }
+    
+    public int getIndexOfLowestDownhillPath(GraphicsProgram graphics){
+        int bestLineIndex = 0;
+        double bestLineLength = 0;
+        for (int i = 1; i < mapData.length; i++){
+            double currentLineLength = drawLowestDownhillPath(graphics, i, Color.orange);
             if (bestLineLength > currentLineLength){
                 bestLineIndex = i;
                 bestLineLength = currentLineLength;

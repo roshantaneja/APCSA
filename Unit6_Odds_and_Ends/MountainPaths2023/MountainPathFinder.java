@@ -11,7 +11,7 @@ public class MountainPathFinder extends GraphicsProgram
 
     private JButton loadButton;
     private JButton drawButton;
-    private JButton findPathButton;
+    private JButton findPathButton, downhillPathButton;
     private JTextField fileNameField;
     private JTextField rowsField, colsField;
 
@@ -56,6 +56,10 @@ public class MountainPathFinder extends GraphicsProgram
         findPathButton = new JButton("Find Path");
         findPathButton.setEnabled(false);
         add(findPathButton, NORTH);
+        
+        downhillPathButton = new JButton("Find Downhill Path");
+        downhillPathButton.setEnabled(false);
+        add(downhillPathButton, NORTH);
     }
 
     public void actionPerformed(ActionEvent event)
@@ -66,6 +70,8 @@ public class MountainPathFinder extends GraphicsProgram
             handleDrawButton();
         if (event.getSource() == findPathButton)
             handleFindPathButton();
+        if (event.getSource() == downhillPathButton)
+            handleDownhillPathButton();
         // more to do here eventually
     }
 
@@ -84,6 +90,7 @@ public class MountainPathFinder extends GraphicsProgram
             JOptionPane.showMessageDialog(this, "No bueno");
         }
         findPathButton.setEnabled(false);
+        downhillPathButton.setEnabled(false);
     }
 
     private void handleDrawButton(){
@@ -91,11 +98,17 @@ public class MountainPathFinder extends GraphicsProgram
         mountainMap.drawMap(this);
         drawButton.setEnabled(false);
         findPathButton.setEnabled(true);
+        downhillPathButton.setEnabled(true);
     }
     
     private void handleFindPathButton(){
         int bestIndex = mountainMap.getIndexOfLowestElevPath(this);
         mountainMap.drawLowestElevPath(this, bestIndex, Color.green);
+    }
+    
+    private void handleDownhillPathButton(){
+        int bestIndex = mountainMap.getIndexOfLowestDownhillPath(this);
+        mountainMap.drawLowestDownhillPath(this, bestIndex, Color.blue);
     }
 
 }

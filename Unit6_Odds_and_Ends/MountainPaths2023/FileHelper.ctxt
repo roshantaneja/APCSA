@@ -1,5 +1,6 @@
 #BlueJ class context
-comment0.params=filename\ desiredArrayLength
-comment0.target=double[]\ readDataFromFile(java.lang.String,\ int)
-comment0.text=\ Reads\ double\ data\ from\ a\ file.\ \ \n\ @param\ filename\ the\ name\ of\ the\ file\ to\ be\ read,\ which\ should\ be\ in\ the\ project\ folder\n\ @param\ desiredArrayLength\ the\ desired\ length\ of\ the\ returned\ array,\ which\ should\ be\ the\ number\ of\ doubles\ in\ the\ entire\ file\n\ @return\ an\ array\ consisting\ of\ all\ the\ doubles\ in\ the\ file,\ which\ should\ be\ desiredArrayLength\ long;\ if\ there\ is\ a\ issue\ reading\ from\ the\ file,\ or\ the\ file\ does\ not\ contain\ exactly\ desiredArrayLength\ doubles,\ then\ this\ method\ returns\ an\ empty\ array\ (length\ \=\ 0)\n
-numComments=1
+comment0.target=FileHelper
+comment1.params=filename\ desiredArrayLength
+comment1.target=double[]\ readDataFromFile(java.lang.String,\ int)
+comment1.text=\ Reads\ double\ data\ from\ a\ file.\ \ \r\n\ @param\ filename\ the\ name\ of\ the\ file\ to\ be\ read,\ which\ should\ be\ in\ the\ project\ folder\r\n\ @param\ desiredArrayLength\ the\ desired\ length\ of\ the\ returned\ array,\ which\ should\ be\ the\ number\ of\ doubles\ in\ the\ entire\ file\r\n\ @return\ an\ array\ consisting\ of\ all\ the\ doubles\ in\ the\ file,\ which\ should\ be\ desiredArrayLength\ long;\ if\ there\ is\ a\ issue\ reading\ from\ the\ file,\ or\ the\ file\ does\ not\ contain\ exactly\ desiredArrayLength\ doubles,\ then\ this\ method\ returns\ an\ empty\ array\ (length\ \=\ 0)\r\n
+numComments=2
